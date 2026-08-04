@@ -20,9 +20,13 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <a
           href={logoHref}
-          className="text-lg font-extrabold tracking-tight text-slate-950 hover:opacity-90"
+          className="flex min-w-0 items-center hover:opacity-90 transition-opacity"
         >
-          RENDEZVÉNYÁRNYÉKOLÁS
+          <img
+            src="/brand-lockup-dark.png"
+            alt="rendezvenyarnyekolas.hu"
+            className="h-9 w-auto max-w-[min(100%,22rem)] object-contain object-left sm:h-10 sm:max-w-[28rem] md:max-w-none"
+          />
         </a>
 
         <ul className="hidden gap-8 md:flex">
