@@ -17,15 +17,15 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
         className
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+      <nav className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:h-20">
         <a
           href={logoHref}
-          className="flex min-w-0 items-center hover:opacity-90 transition-opacity"
+          className="flex min-w-0 flex-1 items-center hover:opacity-90 transition-opacity"
         >
           <img
             src="/brand-lockup-dark.png"
             alt="rendezvenyarnyekolas.hu"
-            className="h-9 w-auto max-w-[min(100%,22rem)] object-contain object-left sm:h-10 sm:max-w-[28rem] md:max-w-none"
+            className="h-12 w-auto max-w-full object-contain object-left sm:h-14 md:h-16"
           />
         </a>
 

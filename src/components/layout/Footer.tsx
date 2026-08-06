@@ -51,11 +51,11 @@ export function Footer({
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
               <p className="text-xs text-sky-400 font-semibold">EST. {foundedYear}</p>
-              <a href="/" className="inline-block hover:opacity-90 transition-opacity">
+              <a href="/" className="inline-block max-w-full hover:opacity-90 transition-opacity">
                 <img
                   src="/brand-lockup.png"
                   alt="rendezvenyarnyekolas.hu"
-                  className="h-9 w-auto max-w-full object-contain object-left sm:h-10"
+                  className="h-12 w-auto max-w-full object-contain object-left sm:h-14 md:h-16"
                 />
               </a>
             </div>
