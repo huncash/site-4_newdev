@@ -31,7 +31,7 @@ export const CONTENT = {
     title: "Kézzel festett és nyomtatott lycra dekor ponyvák rendezvényekre",
     subtitle:
       "Bérelhető dekorfelületek kültérre és beltérre — városi rendezvényekhez, fesztiválokhoz, kulturális és céges eseményekhez. A helyszín geometriájához igazítva feszítjük ki.",
-    image: "/img/gallery/hero-night.png",
+    image: "/img/gallery/day-field.png",
     ctaPrimary: { label: "Ajánlatkérés", href: "/kapcsolat" },
   },
 
