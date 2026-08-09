@@ -107,23 +107,23 @@ export function PartnerAuthForm({
   return (
     <div className={cn("mx-auto w-full max-w-md", className)}>
       <div className="mb-8 text-center">
-        <div className="text-xs font-medium uppercase tracking-[0.25em] text-sky-400">
+        <div className="text-xs font-medium uppercase tracking-[0.25em] text-brand">
           Partner / ügyfél
         </div>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-white">
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
           {isRegister ? "Regisztráció" : "Belépés"}
         </h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-muted-foreground">
           Kosár mentése a fiókodhoz. Nincs ügyvezetői / admin hozzáférés.
         </p>
       </div>
 
       <form
         onSubmit={onSubmit}
-        className="rounded-lg border border-slate-800 bg-slate-900 p-6 shadow-sm"
+        className="rounded-lg border border-border bg-card p-6 shadow-sm"
       >
         <div className="flex flex-col gap-4">
-          <label className="flex flex-col gap-1.5 text-sm text-slate-200">
+          <label className="flex flex-col gap-1.5 text-sm text-foreground">
             <span className="font-medium">E-mail</span>
             <input
               type="email"
@@ -131,10 +131,10 @@ export function PartnerAuthForm({
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-10 rounded-md border border-slate-700 bg-slate-950 px-3 text-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+              className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             />
           </label>
-          <label className="flex flex-col gap-1.5 text-sm text-slate-200">
+          <label className="flex flex-col gap-1.5 text-sm text-foreground">
             <span className="font-medium">Jelszó</span>
             <input
               type="password"
@@ -143,14 +143,14 @@ export function PartnerAuthForm({
               autoComplete={isRegister ? "new-password" : "current-password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-10 rounded-md border border-slate-700 bg-slate-950 px-3 text-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+              className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             />
           </label>
-          {error ? <p className="text-sm text-red-400">{error}</p> : null}
+          {error ? <p className="text-sm text-destructive">{error}</p> : null}
           <button
             type="submit"
             disabled={pending}
-            className="h-10 rounded-md bg-sky-500 px-4 text-sm font-medium text-slate-950 hover:bg-sky-400 disabled:opacity-50"
+            className="h-10 rounded-md bg-brand px-4 text-sm font-medium text-brand-foreground hover:bg-brand-dark disabled:opacity-50"
           >
             {pending
               ? "…"
@@ -161,11 +161,11 @@ export function PartnerAuthForm({
         </div>
       </form>
 
-      <p className="mt-4 text-center text-sm text-slate-400">
+      <p className="mt-4 text-center text-sm text-muted-foreground">
         {isRegister ? (
           <>
             Már van fiókod?{" "}
-            <Link href="/partner/login" className="underline hover:text-white">
+            <Link href="/partner/login" className="underline text-brand hover:text-brand-dark">
               Belépés
             </Link>
           </>
@@ -174,7 +174,7 @@ export function PartnerAuthForm({
             Nincs még fiókod?{" "}
             <Link
               href="/partner/register"
-              className="underline hover:text-white"
+              className="underline text-brand hover:text-brand-dark"
             >
               Regisztráció
             </Link>

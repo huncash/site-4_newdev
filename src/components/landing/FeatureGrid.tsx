@@ -22,22 +22,22 @@ export interface FeatureGridProps {
 
 const DEFAULT_FEATURES: Feature[] = [
   {
-    icon: "⛺",
-    title: "Professzionális Rendezvénysátrak",
+    icon: "🎨",
+    title: "Meglévő egyedi darabok bérlése",
     description:
-      "Nagy teherbírású, időjárásálló alumínium vázas partysátrak és rendezvénysátrak bármilyen eseményre.",
+      "Kézzel festett és nyomtatott lycra dekorponyvák bérbeadása — egész évben, előfoglalással. Nem gyártás-orientált műhely vagyunk.",
   },
   {
-    icon: "☂️",
-    title: "Napernyők és Árnyékolók",
+    icon: "☀️",
+    title: "Árnyék és hangulat",
     description:
-      "Óriás napernyők, egyedi formájú stretch sátrak és moduláris árnyékoló rendszerek teraszokra és kertekbe.",
+      "Kültéren árnyékot ad, beltérben karakteres vizuális réteget épít a tér fölé. Esővédelemre nem alkalmas — arra külön elemek vannak.",
   },
   {
     icon: "🔧",
-    title: "Helyszíni Telepítés",
+    title: "Telepítés és koordináció",
     description:
-      "Szakképzett csapatunk vállalja a teljes körű szállítást, építést és bontást az ország egész területén.",
+      "A felület tervezését, kifeszítését és bontását mi végezzük. Emelőkosár, állvány, helyszíni technika esetén a megrendelő alvállalkozóival dolgozunk együtt.",
   },
 ];
 
@@ -47,24 +47,24 @@ export function FeatureGrid({
   className,
 }: FeatureGridProps) {
   return (
-    <section className={cn("bg-slate-950 py-16", className)}>
+    <section className={cn("bg-background py-16", className)}>
       <div className="mx-auto max-w-7xl px-4">
         {heading ? (
-          <h2 className="mb-10 text-center text-2xl font-bold tracking-tight text-white md:text-3xl">
+          <h2 className="mb-10 text-center text-2xl font-bold tracking-tight text-foreground md:text-3xl">
             {heading}
           </h2>
         ) : null}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
-            <Card key={feature.title} className="border-slate-800 bg-slate-900">
+            <Card key={feature.title}>
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-3 text-base text-sky-400">
-                  <span className="text-2xl leading-none">{feature.icon}</span>
+                <CardTitle className="flex items-center gap-3 text-base text-foreground">
+                  <span className="text-2xl leading-none text-brand">{feature.icon}</span>
                   {feature.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-300">{feature.description}</p>
+                <p className="text-sm text-muted-foreground">{feature.description}</p>
               </CardContent>
             </Card>
           ))}

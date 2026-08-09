@@ -1,31 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { MENU_ITEMS } from "@/config/menu";
 import { useCartStore } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
 
 export function Navbar({ logoHref = "/", className }: { logoHref?: string; className?: string }) {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const router = useRouter();
   const cartItems = useCartStore();
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  function handleSearch(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const q = query.trim();
+    router.push(q ? `/termekek?q=${encodeURIComponent(q)}` : "/termekek");
+    setOpen(false);
+  }
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full bg-sky-400 text-slate-950 shadow-md",
+        "sticky top-0 z-50 w-full bg-brand text-brand-foreground shadow-sm",
         className
       )}
     >
-      <nav className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:h-20">
+      <nav className="mx-auto flex min-h-[7.5rem] max-w-7xl flex-col items-center justify-center gap-2 px-4 py-2 md:h-20 md:min-h-0 md:flex-row md:items-center md:justify-between md:gap-4 md:py-0">
         <a
           href={logoHref}
-          className="flex min-w-0 flex-1 items-center hover:opacity-90 transition-opacity"
+          className="flex w-full shrink-0 items-center justify-center md:w-auto md:min-w-0 md:justify-start"
         >
           <img
             src="/brand-lockup-dark.png"
             alt="rendezvenyarnyekolas.hu"
-            className="h-12 w-auto max-w-full object-contain object-left sm:h-14 md:h-16"
+            className="h-12 w-full max-w-none object-contain object-center sm:h-14 md:h-16 md:w-auto md:max-w-none md:object-left"
           />
         </a>
 
@@ -34,7 +45,7 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
             <li key={item.href}>
               <a
                 href={item.href}
-                className="text-sm font-bold text-slate-900 transition-colors hover:text-white"
+                className="text-sm font-bold text-brand-foreground transition-colors hover:underline underline-offset-8"
               >
                 {item.label}
               </a>
@@ -42,10 +53,10 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
           ))}
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="flex w-full shrink-0 items-center gap-2 md:ml-auto md:w-auto sm:gap-3">
           <a
             href="/kapcsolat"
-            className="relative flex items-center justify-center p-2 text-slate-950 hover:text-white"
+            className="relative flex shrink-0 items-center justify-center p-2 text-brand-foreground hover:bg-white/10 rounded-md"
             aria-label="Kosár"
           >
             <svg
@@ -64,37 +75,51 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
             </svg>
             {totalCartCount > 0 ? (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-slate-950 text-[10px] font-bold text-sky-400">
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[10px] font-bold text-brand">
                 {totalCartCount}
               </span>
             ) : null}
           </a>
+
+          <form onSubmit={handleSearch} className="flex min-w-0 flex-1 items-center md:flex-none" role="search">
+            <label htmlFor="header-catalog-search" className="sr-only">
+              Keresés a katalógusban
+            </label>
+            <input
+              id="header-catalog-search"
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Keresés…"
+              className="h-8 w-full rounded-md border border-brand-foreground/30 bg-brand-foreground/90 px-2 text-xs text-foreground placeholder:text-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-foreground sm:h-9 sm:px-3 sm:text-sm md:w-36"
+            />
+          </form>
 
           <button
             type="button"
             aria-label="Menü"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-md border border-slate-900 text-slate-950 md:hidden"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-white/40 text-brand-foreground md:hidden"
           >
             <span className="flex flex-col gap-1.5">
-              <span className={cn("block h-0.5 w-5 bg-slate-950 transition-transform duration-200", open && "translate-y-2 rotate-45")} />
-              <span className={cn("block h-0.5 w-5 bg-slate-950 transition-opacity duration-200", open && "opacity-0")} />
-              <span className={cn("block h-0.5 w-5 bg-slate-950 transition-transform duration-200", open && "-translate-y-2 -rotate-45")} />
+              <span className={cn("block h-0.5 w-5 bg-brand-foreground transition-transform duration-200", open && "translate-y-2 rotate-45")} />
+              <span className={cn("block h-0.5 w-5 bg-brand-foreground transition-opacity duration-200", open && "opacity-0")} />
+              <span className={cn("block h-0.5 w-5 bg-brand-foreground transition-transform duration-200", open && "-translate-y-2 -rotate-45")} />
             </span>
           </button>
         </div>
       </nav>
 
       {open ? (
-        <div className="border-t border-sky-500 bg-sky-400 px-4 pb-4 md:hidden">
+        <div className="border-t border-white/20 bg-brand px-4 pb-4 md:hidden">
           <ul className="flex flex-col gap-1 pt-2">
             {MENU_ITEMS.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md px-3 py-2 text-sm font-bold text-slate-900 hover:bg-sky-500 hover:text-white"
+                  className="block rounded-md px-3 py-2 text-sm font-bold text-brand-foreground hover:bg-white/10"
                 >
                   {item.label}
                 </a>

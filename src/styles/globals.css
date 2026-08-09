@@ -2,31 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * VRGO design tokens — calm blue–white palette from
+ * inspiration/rendezvenyarnyekolas-main/src/styles.css
+ * Brand #6AB5EE, section-dark #33373D, white content surfaces.
+ */
+
 @layer base {
   body {
-    @apply font-sans text-slate-100 bg-slate-950 antialiased;
+    @apply font-sans text-foreground bg-background antialiased;
   }
-  h1, h2, h3 {
-    @apply font-bold text-sky-400;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
   }
   :root {
-    --background: 222 47% 7%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 12%;
-    --card-foreground: 210 40% 98%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 222 47% 7%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 20%;
-    --input: 217 33% 20%;
-    --ring: 199 89% 48%;
-    --radius: 0.75rem;
+    /* VRGO arculat (1:1 az inspo tokenekkel) */
+    --brand: 0.762 0.115 240.5;        /* #6AB5EE — VRGO logó háttér */
+    --brand-foreground: 1 0 0;
+    --brand-dark: 0.66 0.14 244;       /* hover */
+    --section-dark: 0.27 0.012 260;    /* #33373D — sötét szekció */
+    --section-dark-foreground: 0.97 0 0;
+
+    --background: 1 0 0;
+    --foreground: 0.22 0.01 260;
+    --card: 1 0 0;
+    --card-foreground: 0.22 0.01 260;
+    --popover: 1 0 0;
+    --popover-foreground: 0.22 0.01 260;
+    --primary: var(--brand);
+    --primary-foreground: var(--brand-foreground);
+    --secondary: 0.96 0.005 260;
+    --secondary-foreground: 0.22 0.01 260;
+    --muted: 0.96 0.005 260;
+    --muted-foreground: 0.5 0.01 260;
+    --accent: 0.96 0.005 260;
+    --accent-foreground: 0.22 0.01 260;
+    --destructive: 0.6 0.22 27;
+    --destructive-foreground: 0.99 0 0;
+    --border: 0.91 0.005 260;
+    --input: 0.91 0.005 260;
+    --ring: var(--brand);
+    --radius: 0.375rem;
+  }
+
+  .dark {
+    --background: 0.18 0.01 260;
+    --foreground: 0.97 0 0;
+    --card: 0.22 0.01 260;
+    --card-foreground: 0.97 0 0;
+    --popover: 0.22 0.01 260;
+    --popover-foreground: 0.97 0 0;
+    --primary: var(--brand);
+    --primary-foreground: var(--brand-foreground);
+    --secondary: 0.27 0.012 260;
+    --secondary-foreground: 0.97 0 0;
+    --muted: 0.27 0.012 260;
+    --muted-foreground: 0.7 0.01 260;
+    --accent: 0.27 0.012 260;
+    --accent-foreground: 0.97 0 0;
+    --destructive: 0.7 0.19 22;
+    --destructive-foreground: 0.97 0 0;
+    /* közelítés az inspo "white @ 12–15%" hatásához, alpha nélkül */
+    --border: 0.33 0.012 260;
+    --input: 0.35 0.012 260;
+    --ring: var(--brand);
   }
 }

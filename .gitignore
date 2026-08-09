@@ -2,3 +2,11 @@ node_modules
 .next
 out
 .env*.local
+
+# private product data
+private_data/
+**/source_data.json
+_extract/
+_extract*.py
+_build_catalog.py
+

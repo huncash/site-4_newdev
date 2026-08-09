@@ -14,7 +14,7 @@ const steps = [
   {
     num: "2",
     title: "Felületválasztás & Tervezés",
-    desc: "A katalógusunkból kiválasztjuk a leginkább illeszkedő kézzel festett vagy printed lycra elemeket. Szükség esetén helyszíni felmérést végzünk, hogy pontosan megállapítsuk a feszítési tartópontokat."
+    desc: "A katalógusunkból kiválasztjuk a leginkább illeszkedő kézzel festett vagy nyomtatott lycra elemeket. Szükség esetén helyszíni felmérést végzünk, hogy pontosan megállapítsuk a feszítési tartópontokat."
   },
   {
     num: "3",
@@ -32,31 +32,31 @@ export default function FolyamatPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-12">
       <div className="mb-12 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-sky-400">Megvalósítás</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">A kivitelezés folyamata</h1>
-        <p className="mt-3 text-slate-400">
+        <p className="text-xs font-semibold uppercase tracking-widest text-brand">Megvalósítás</p>
+        <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">A kivitelezés folyamata</h1>
+        <p className="mt-3 text-muted-foreground">
           Gördülékeny lebonyolítás a tervezéstől a lebontásig.
         </p>
       </div>
 
-      <div className="relative border-l border-slate-800 ml-4 md:ml-8 space-y-10 pl-6 md:pl-10">
+      <div className="relative border-l border-border ml-4 md:ml-8 space-y-10 pl-6 md:pl-10">
         {steps.map((step) => (
           <div key={step.num} className="relative">
-            <span className="absolute -left-[35px] md:-left-[51px] top-0 flex h-8 w-8 items-center justify-center rounded-full bg-sky-400 text-slate-950 font-bold text-sm">
+            <span className="absolute -left-[35px] md:-left-[51px] top-0 flex h-8 w-8 items-center justify-center rounded-full bg-brand text-brand-foreground font-bold text-sm">
               {step.num}
             </span>
-            <h2 className="text-xl font-bold text-white">{step.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-300">{step.desc}</p>
+            <h2 className="text-xl font-bold text-foreground">{step.title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-14 rounded-lg border border-slate-800 bg-slate-900 p-8 text-center">
-        <h3 className="text-xl font-bold text-white">Készen áll az egyeztetésre?</h3>
-        <p className="mt-2 text-sm text-slate-400">Keressen minket bizalommal részletes ajánlatért!</p>
+      <div className="mt-14 rounded-lg border border-border bg-secondary p-8 text-center">
+        <h3 className="text-xl font-bold text-foreground">Készen áll az egyeztetésre?</h3>
+        <p className="mt-2 text-sm text-muted-foreground">Keressen minket bizalommal részletes ajánlatért!</p>
         <a
           href="/kapcsolat"
-          className="mt-6 inline-block rounded-md bg-sky-400 px-6 py-3 text-sm font-semibold text-slate-950 hover:bg-sky-300 transition-colors"
+          className="mt-6 inline-block rounded-md bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-dark transition-colors"
         >
           Ajánlatkérés
         </a>

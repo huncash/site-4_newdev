@@ -28,30 +28,29 @@ export interface ContentCategory {
 export const CONTENT = {
   hero: {
     badge: "Rendezvény-dekor és árnyékolás",
-    title: "Kézzel festett és printed lycra dekor ponyvák rendezvényekre",
+    title: "Kézzel festett és nyomtatott lycra dekor ponyvák rendezvényekre",
     subtitle:
       "Bérelhető dekorfelületek kültérre és beltérre — városi rendezvényekhez, fesztiválokhoz, kulturális és céges eseményekhez. A helyszín geometriájához igazítva feszítjük ki.",
-    image: "/img/hero/hero-1600.jpg",
+    image: "/img/gallery/hero-night.png",
     ctaPrimary: { label: "Ajánlatkérés", href: "/kapcsolat" },
-    ctaSecondary: { label: "Fotós referenciák", href: "/referenciak" },
   },
 
   gallery: {
     items: [
       {
-        image: "/img/gallery/nappali-foutca-1200.jpg",
-        alt: "Printed lycra dekorponyva nappali telepítésben egy belvárosi sétálóutca fölött.",
+        image: "/img/gallery/nappali-foutca.png",
+        alt: "Nyomtatott lycra dekorponyva nappali telepítésben egy belvárosi sétálóutca fölött.",
         title: "Sétálóutca nappal",
         description: "Városi közegben is megáll a látvány.",
       },
       {
-        image: "/img/gallery/nappali-alulnezet-800.jpg",
+        image: "/img/gallery/nappali-alulnezet.png",
         alt: "A dekorponyva alsó nézete nappali fényben, markáns radiális mintázattal.",
         title: "Alulnézet",
         description: "A forma a járókelő szemszögéből is működik.",
       },
       {
-        image: "/img/gallery/setaloutca-telepites-800.jpg",
+        image: "/img/gallery/setaloutca-telepites.png",
         alt: "Dekorponyva telepítése emelőkosárral belvárosi helyszínen.",
         title: "Helyszíni telepítés",
         description: "Emelőkosaras munkáknál a megrendelő technikai csapatával együtt dolgozunk.",
@@ -66,7 +65,7 @@ export const CONTENT = {
         icon: "🎨",
         title: "Meglévő egyedi darabok bérlése",
         description:
-          "Kézzel festett és printed lycra dekorponyvák bérbeadása — egész évben, előfoglalással. Nem gyártás-orientált műhely vagyunk.",
+          "Kézzel festett és nyomtatott lycra dekorponyvák bérbeadása — egész évben, előfoglalással. Nem gyártás-orientált műhely vagyunk.",
       },
       {
         icon: "☀️",
@@ -91,7 +90,7 @@ export const CONTENT = {
 
   useCases: {
     heading: "Kinek ajánljuk",
-    image: "/img/gallery/hero-night-1600.jpg",
+    image: "/img/gallery/hero-night.png",
     items: [
       {
         icon: "🎵",
@@ -146,7 +145,7 @@ export const CONTENT = {
       },
       {
         slug: "printed-lycra-spiral-15x15",
-        name: "Printed lycra spirál (15×15 m)",
+        name: "Nyomtatott lycra spirál (15×15 m)",
         type: "rental",
         priceNote: "Egyedi ajánlat / alkalom",
       },
@@ -168,7 +167,7 @@ export const CONTENT = {
     heading: "Megrendeléstől a bontásig — négy lépés",
     steps: [
       { step: "1.", title: "Egyeztetés", description: "Helyszín, funkció, dátum, vizuális irány és technikai környezet átbeszélése." },
-      { step: "2.", title: "Felület kiválasztása", description: "Kézzel festett vagy printed lycra megoldás, forma és méret szerint." },
+      { step: "2.", title: "Felület kiválasztása", description: "Kézzel festett vagy nyomtatott lycra megoldás, forma és méret szerint." },
       { step: "3.", title: "Telepítés", description: "A felületet a helyszín adottságaihoz igazítva feszítjük ki." },
       { step: "4.", title: "Bontás", description: "Rendezvény után bontás, összeszedés és elszállítás a megbeszélt időablakban." },
     ],
@@ -205,5 +204,23 @@ export const CONTENT = {
 
   catalog: {
     heading: "Termékkatalógus",
+  },
+
+  footer: {
+    brandTagline: "Lycra dekor ponyvák bérbeadása rendezvényekre",
+    brandSubline: "Bérlés · telepítés · bontás",
+    catalogLinks: [
+      { label: "Bérelhető ponyvák", href: "/termekek" },
+      { label: "Tartozékok / UV", href: "/termekek" },
+      { label: "Teljes katalógus", href: "/termekek" },
+    ] satisfies ContentLink[],
+    aboutLinks: [
+      { label: "Referenciák", href: "/referenciak" },
+      { label: "Folyamat", href: "/folyamat" },
+      { label: "GYIK", href: "/gyik" },
+      { label: "Blog", href: "/blog" },
+      { label: "Kapcsolat", href: "/kapcsolat" },
+      { label: "ÁSZF", href: "/aszf" },
+    ] satisfies ContentLink[],
   },
 } as const;

@@ -12,14 +12,16 @@ export default function TermekekPage() {
   const products = getProducts();
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-12">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white">Termékkatalógus</h1>
-        <p className="mt-2 text-slate-400">
+    <main className="mx-auto max-w-7xl px-4 pb-6 pt-4 sm:pb-8 sm:pt-6">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+          Termékkatalógus
+        </h1>
+        <p className="mt-1 text-sm leading-snug text-muted-foreground">
           Bérelhető dekorfelületek és megvásárolható UV kellékek rendezvényekre.
         </p>
       </div>
-      <Suspense fallback={<div className="text-slate-400">Katalógus betöltése...</div>}>
+      <Suspense fallback={<div className="text-muted-foreground">Katalógus betöltése...</div>}>
         <Catalog products={products} basePath="/termekek" />
       </Suspense>
     </main>

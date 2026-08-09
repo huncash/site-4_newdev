@@ -20,26 +20,31 @@ export function CtaSection({
   variant = "default",
   className,
 }: CtaSectionProps) {
+  const isDark = variant === "dark";
   return (
     <section
       className={cn(
-        "py-20 border-y border-slate-800 bg-gradient-to-r from-sky-950/40 via-slate-900 to-sky-950/40",
+        isDark
+          ? "py-20 border-y border-section-dark-foreground/15 bg-section-dark text-section-dark-foreground"
+          : "py-20 border-y border-border bg-secondary text-foreground",
         className
       )}
     >
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center">
-        <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+        <h2 className={cn("text-3xl font-extrabold tracking-tight md:text-4xl", isDark ? "text-section-dark-foreground" : "text-foreground")}>
           {heading}
         </h2>
 
         {subheading ? (
-          <p className="text-lg text-slate-300">{subheading}</p>
+          <p className={cn("text-lg", isDark ? "text-section-dark-foreground/85" : "text-muted-foreground")}>
+            {subheading}
+          </p>
         ) : null}
 
         <Button
           asChild
           size="lg"
-          className="bg-sky-400 text-slate-950 font-bold hover:bg-sky-300 px-10"
+          className="bg-brand text-brand-foreground font-bold hover:bg-brand-dark px-10"
         >
           <a href={ctaHref}>{ctaLabel}</a>
         </Button>

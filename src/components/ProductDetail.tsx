@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Product } from "@/lib/types";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -13,6 +14,8 @@ export interface ProductDetailProps {
 }
 
 type Tab = "description" | "specs" | "docs";
+
+const crumbLinkClass = "text-muted-foreground hover:text-brand transition-colors";
 
 export function ProductDetail({
   product,
@@ -42,25 +45,53 @@ export function ProductDetail({
     { id: "docs", label: "Dokumentáció" },
   ];
 
+  const categoryHref = product.category
+    ? `/termekek?cat=${encodeURIComponent(product.category)}`
+    : null;
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <nav className="mb-6 text-sm text-slate-400">
-        <span>Kezdőlap</span>
-        <span className="mx-2">/</span>
-        <span>Katalógus</span>
-        {product.category ? (
-          <>
-            <span className="mx-2">/</span>
-            <span>{product.category}</span>
-          </>
-        ) : null}
-        <span className="mx-2">/</span>
-        <span className="font-medium text-white">{product.name}</span>
+      <nav aria-label="Morzsamenü" className="mb-6 text-sm">
+        <ol className="flex flex-wrap items-center gap-x-0">
+          <li className="inline-flex items-center">
+            <Link href="/" className={crumbLinkClass}>
+              Kezdőlap
+            </Link>
+            <span className="mx-2" aria-hidden="true">
+              /
+            </span>
+          </li>
+          <li className="inline-flex items-center">
+            <Link href="/termekek" className={crumbLinkClass}>
+              Katalógus
+            </Link>
+            {product.category || product.name ? (
+              <span className="mx-2" aria-hidden="true">
+                /
+              </span>
+            ) : null}
+          </li>
+          {product.category && categoryHref ? (
+            <li className="inline-flex items-center">
+              <Link href={categoryHref} className={crumbLinkClass}>
+                {product.category}
+              </Link>
+              <span className="mx-2" aria-hidden="true">
+                /
+              </span>
+            </li>
+          ) : null}
+          <li className="inline-flex items-center">
+            <span className="font-medium text-foreground" aria-current="page">
+              {product.name}
+            </span>
+          </li>
+        </ol>
       </nav>
 
       <div className="grid gap-10 md:grid-cols-2">
         <section>
-          <div className="aspect-square overflow-hidden rounded-xl bg-slate-900 border border-slate-800">
+          <div className="aspect-square overflow-hidden rounded-xl bg-card border border-border">
             {product.imageUrl && !product.imageUrl.includes("feltoltes-alatt") ? (
               <img
                 src={product.imageUrl}
@@ -69,13 +100,13 @@ export function ProductDetail({
               />
             ) : (
               <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                <p className="text-sm font-medium text-slate-400">Feltöltés alatt</p>
-                <p className="text-xs text-slate-500">A kép hamarosan elérhető lesz</p>
+                <p className="text-sm font-medium text-muted-foreground">Feltöltés alatt</p>
+                <p className="text-xs text-muted-foreground">A kép hamarosan elérhető lesz</p>
               </div>
             )}
           </div>
           {product.imageUrl && !product.imageUrl.includes("feltoltes-alatt") ? (
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-muted-foreground">
               A termékképek kizárólag illusztrációk.
             </p>
           ) : null}
@@ -86,33 +117,33 @@ export function ProductDetail({
             <Badge variant="secondary" className="w-fit">{product.badge}</Badge>
           ) : null}
 
-          <h1 className="text-3xl font-bold leading-tight text-white">{product.name}</h1>
+          <h1 className="text-3xl font-bold leading-tight text-foreground">{product.name}</h1>
 
           {product.description ? (
-            <p className="text-sm text-slate-300">{product.description}</p>
+            <p className="text-sm text-muted-foreground">{product.description}</p>
           ) : null}
 
-          <div className="rounded-lg border border-slate-800 bg-slate-900 p-4">
-            <p className="text-2xl font-bold text-sky-400">{formattedPriceNet}</p>
-            <p className="text-xs text-slate-400">+ ÁFA / db</p>
-            <p className="mt-1 text-sm text-slate-400">
+          <div className="rounded-lg border border-border bg-secondary p-4">
+            <p className="text-2xl font-bold text-brand">{formattedPriceNet}</p>
+            <p className="text-xs text-muted-foreground">+ ÁFA / db</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               Bruttó: {formattedPriceGross} / db
             </p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <Button className="w-full bg-sky-400 text-slate-950 font-bold hover:bg-sky-300" onClick={onRequestQuote} type="button">
+            <Button className="w-full bg-brand text-brand-foreground font-bold hover:bg-brand-dark" onClick={onRequestQuote} type="button">
               Ajánlatot kérek erre a termékre
             </Button>
-            <Button variant="outline" className="w-full border-slate-700 text-slate-200" onClick={onAddToCart} type="button">
+            <Button variant="outline" className="w-full" onClick={onAddToCart} type="button">
               Kosárba teszem
             </Button>
           </div>
         </section>
       </div>
 
-      <section className="mt-12 border-t border-slate-800 pt-8">
-        <div className="mb-6 flex gap-6 border-b border-slate-800">
+      <section className="mt-12 border-t border-border pt-8">
+        <div className="mb-6 flex gap-6 border-b border-border">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -121,8 +152,8 @@ export function ProductDetail({
               className={[
                 "pb-2 text-sm font-medium transition-colors",
                 activeTab === tab.id
-                  ? "border-b-2 border-sky-400 text-sky-400"
-                  : "text-slate-400 hover:text-white",
+                  ? "border-b-2 border-brand text-brand"
+                  : "text-muted-foreground hover:text-foreground",
               ].join(" ")}
             >
               {tab.label}
@@ -130,13 +161,13 @@ export function ProductDetail({
           ))}
         </div>
 
-        <div className="prose prose-sm max-w-none text-slate-300">
+        <div className="prose prose-sm max-w-none prose-headings:text-foreground prose-a:text-brand prose-a:underline prose-a:underline-offset-4 hover:prose-a:text-brand-dark">
           {activeTab === "description" && (
             <div>
               {product.description ? (
                 <p>{product.description}</p>
               ) : (
-                <p className="text-slate-500">Nincs elérhető leírás.</p>
+                <p className="text-muted-foreground">Nincs elérhető leírás.</p>
               )}
             </div>
           )}
@@ -147,32 +178,32 @@ export function ProductDetail({
                 <table className="w-full text-sm">
                   <tbody>
                     {specs.map(([key, value]) => (
-                      <tr key={key} className="border-b border-slate-800 last:border-0">
-                        <td className="py-2 pr-4 font-medium text-slate-200">{key}</td>
-                        <td className="py-2 text-slate-400">{String(value)}</td>
+                      <tr key={key} className="border-b border-border last:border-0">
+                        <td className="py-2 pr-4 font-medium text-foreground">{key}</td>
+                        <td className="py-2 text-muted-foreground">{String(value)}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               ) : (
-                <p className="text-slate-500">Nincs elérhető műszaki adat.</p>
+                <p className="text-muted-foreground">Nincs elérhető műszaki adat.</p>
               )}
             </div>
           )}
 
           {activeTab === "docs" && (
-            <p className="text-slate-500">Nincs elérhető dokumentáció.</p>
+            <p className="text-muted-foreground">Nincs elérhető dokumentáció.</p>
           )}
         </div>
       </section>
 
       {relatedProducts.length > 0 ? (
-        <section className="mt-12 border-t border-slate-800 pt-8">
-          <h2 className="mb-4 text-2xl font-bold text-white">Kapcsolódó termékek</h2>
+        <section className="mt-12 border-t border-border pt-8">
+          <h2 className="mb-4 text-2xl font-bold text-foreground">Kapcsolódó termékek</h2>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {relatedProducts.map((rel) => (
-              <div key={rel.id} className="overflow-hidden rounded-lg border border-slate-800 bg-slate-900">
-                <div className="aspect-square overflow-hidden bg-slate-950">
+              <div key={rel.id} className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+                <div className="aspect-square overflow-hidden bg-secondary">
                   <img
                     src={rel.imageUrl}
                     alt={rel.name}
@@ -180,8 +211,8 @@ export function ProductDetail({
                   />
                 </div>
                 <div className="p-3">
-                  <p className="text-sm font-medium leading-tight text-white">{rel.name}</p>
-                  <p className="mt-1 text-sm text-sky-400 font-semibold">
+                  <p className="text-sm font-medium leading-tight text-foreground">{rel.name}</p>
+                  <p className="mt-1 text-sm text-brand font-semibold">
                     {new Intl.NumberFormat("hu-HU", {
                       style: "currency",
                       currency: "HUF",

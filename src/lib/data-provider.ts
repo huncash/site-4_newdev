@@ -50,6 +50,70 @@ const SENSITIVE_TOP_LEVEL = new Set([
   "marginMultiplier",
 ]);
 
+/** Leading brand token duplicated in EUROLITE catalog names (case-insensitive). */
+const EUROLITE_NAME_PREFIX = /^EUROLITE\s+/i;
+
+export function stripEuroliteNamePrefix(name: string): string {
+  return name.replace(EUROLITE_NAME_PREFIX, "").trim();
+}
+
+function getSpecValue(
+  specs: Record<string, unknown> | undefined,
+  keyPattern: RegExp
+): string | undefined {
+  if (!specs) return undefined;
+  for (const [key, value] of Object.entries(specs)) {
+    if (keyPattern.test(key) && value != null && String(value).trim()) {
+      return String(value).trim();
+    }
+  }
+  return undefined;
+}
+
+function isEuroliteProduct(
+  product: Pick<RawProduct, "name" | "specs"> & Record<string, unknown>
+): boolean {
+  if (EUROLITE_NAME_PREFIX.test(product.name ?? "")) return true;
+  const marka = getSpecValue(
+    product.specs as Record<string, unknown> | undefined,
+    /^márka$|^marka$/i
+  );
+  if (marka && marka.toUpperCase() === "EUROLITE") return true;
+  const forras = getSpecValue(
+    product.specs as Record<string, unknown> | undefined,
+    /^forrás$|^forras$/i
+  );
+  if (forras && /eurolite/i.test(forras)) return true;
+  const cikkszam = getSpecValue(
+    product.specs as Record<string, unknown> | undefined,
+    /^cikkszám$|^cikkszam$/i
+  );
+  if (cikkszam && /^ACC-EUR-/i.test(cikkszam)) return true;
+  return false;
+}
+
+/**
+ * EUROLITE brand appears once in specs.Márka; strip duplicated "EUROLITE "
+ * from the display name if present.
+ */
+export function normalizeEuroliteProduct<T extends RawProduct>(product: T): T {
+  if (!isEuroliteProduct(product)) return product;
+
+  const name = stripEuroliteNamePrefix(product.name);
+  const prevSpecs = (product.specs ?? {}) as Record<string, string | number>;
+  const rest: Record<string, string | number> = {};
+  for (const [key, value] of Object.entries(prevSpecs)) {
+    if (/^márka$|^marka$/i.test(key)) continue;
+    rest[key] = value;
+  }
+
+  return {
+    ...product,
+    name,
+    specs: { Márka: "EUROLITE", ...rest },
+  };
+}
+
 function loadSource(): SourceData {
   try {
     const raw = readFileSync(resolveSourcePath(), "utf-8");
@@ -69,23 +133,24 @@ function loadSource(): SourceData {
 export function toPublicProduct(
   product: Product & Record<string, unknown>
 ): Product {
-  const specs = product.specs
+  const normalized = normalizeEuroliteProduct(product as RawProduct);
+  const specs = normalized.specs
     ? Object.fromEntries(
-        Object.entries(product.specs).filter(
+        Object.entries(normalized.specs).filter(
           ([key]) => !SENSITIVE_SPEC_KEY.test(key)
         )
       )
     : undefined;
 
   return {
-    id: product.id,
-    slug: product.slug,
-    name: product.name,
-    price: product.price,
-    description: product.description,
-    imageUrl: product.imageUrl,
-    category: product.category,
-    badge: product.badge,
+    id: normalized.id,
+    slug: normalized.slug,
+    name: normalized.name,
+    price: normalized.price,
+    description: normalized.description,
+    imageUrl: normalized.imageUrl,
+    category: normalized.category,
+    badge: normalized.badge,
     specs: specs && Object.keys(specs).length > 0 ? specs : undefined,
   };
 }
@@ -151,7 +216,7 @@ export function upsertRawProduct(product: RawProduct): RawProduct {
 
   const source = loadSource();
   const idx = source.products.findIndex((p) => p.id === product.id);
-  const cleaned = stripDangerousKeys(product);
+  const cleaned = normalizeEuroliteProduct(stripDangerousKeys(product));
   if (idx >= 0) {
     source.products[idx] = { ...source.products[idx], ...cleaned, id: product.id };
   } else {

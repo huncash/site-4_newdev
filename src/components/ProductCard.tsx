@@ -35,7 +35,7 @@ export function ProductCard({
   imageAlt,
   description,
   badge,
-  actionLabel = "Kosárba",
+  actionLabel,
   onAction,
   editable = false,
   onEdit,
@@ -47,9 +47,16 @@ export function ProductCard({
     maximumFractionDigits: 0,
   }).format(price);
 
+  const showActions = Boolean(onAction || (editable && onEdit));
+
   return (
-    <Card className={cn("overflow-hidden border-slate-800 bg-slate-900 hover:border-slate-700 transition-all", className)}>
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950">
+    <Card
+      className={cn(
+        "overflow-hidden rounded-lg shadow-sm transition-colors hover:border-brand/40",
+        className
+      )}
+    >
+      <div className="relative aspect-[3/2] w-full overflow-hidden bg-secondary">
         {imageUrl && !imageUrl.includes("feltoltes-alatt") ? (
           <img
             src={imageUrl}
@@ -59,37 +66,50 @@ export function ProductCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <p className="text-xs text-slate-500">Feltöltés alatt</p>
+            <p className="text-[10px] text-muted-foreground">Feltöltés alatt</p>
           </div>
         )}
         {badge ? (
-          <Badge className="absolute left-3 top-3" variant="secondary">
+          <Badge className="absolute left-1.5 top-1.5 px-1.5 py-0 text-[10px]" variant="secondary">
             {badge}
           </Badge>
         ) : null}
       </div>
 
-      <CardHeader className="pb-3">
-        <CardTitle className="line-clamp-2 text-base text-white">{title}</CardTitle>
+      <CardHeader className="space-y-0.5 p-2 pb-1">
+        <CardTitle className="line-clamp-2 text-xs font-semibold leading-snug text-card-foreground sm:text-sm">
+          {title}
+        </CardTitle>
         {description ? (
-          <CardDescription className="line-clamp-2 text-slate-400">{description}</CardDescription>
+          <CardDescription className="line-clamp-1 text-[11px] leading-snug text-muted-foreground">
+            {description}
+          </CardDescription>
         ) : null}
       </CardHeader>
 
-      <CardContent className="pb-3 pt-0">
-        <p className="text-lg font-bold text-sky-400">{formattedPrice}</p>
+      <CardContent className="p-2 pb-1.5 pt-0">
+        <p className="text-sm font-semibold text-brand">{formattedPrice}</p>
       </CardContent>
 
-      <CardFooter className="pt-0 flex gap-2">
-        <Button className="w-full bg-sky-400 text-slate-950 font-bold hover:bg-sky-300" onClick={onAction} type="button">
-          {actionLabel}
-        </Button>
-        {editable ? (
-          <Button variant="outline" onClick={onEdit} type="button">
-            Szerkesztés
-          </Button>
-        ) : null}
-      </CardFooter>
+      {showActions ? (
+        <CardFooter className="gap-1.5 p-2 pt-0">
+          {onAction ? (
+            <Button
+              size="sm"
+              className="h-7 w-full bg-brand px-2 text-[11px] font-bold text-brand-foreground hover:bg-brand-dark"
+              onClick={onAction}
+              type="button"
+            >
+              {actionLabel ?? "Kosárba"}
+            </Button>
+          ) : null}
+          {editable ? (
+            <Button size="sm" variant="outline" className="h-7 px-2 text-[11px]" onClick={onEdit} type="button">
+              Szerkesztés
+            </Button>
+          ) : null}
+        </CardFooter>
+      ) : null}
     </Card>
   );
 }

@@ -13,14 +13,19 @@ export interface PostMeta {
   author?: string;
   category?: string;
   readingTime?: number;
+  image?: string;
 }
 
 export interface Post extends PostMeta {
   contentHtml: string;
 }
 
+const privatePostsDir = join(process.cwd(), "private_data", "posts");
+const dataPostsDir = join(process.cwd(), "data", "posts");
+
 const postsDir = resolve(
-  process.env.POSTS_DIR ?? join(process.cwd(), "private_data", "posts")
+  process.env.POSTS_DIR ??
+    (existsSync(privatePostsDir) ? privatePostsDir : dataPostsDir)
 );
 
 export function getPostSlugs(): string[] {
@@ -52,6 +57,7 @@ export function getPostMeta(slug: string): PostMeta | null {
       author: data.author as string | undefined,
       category: data.category as string | undefined,
       readingTime: data.readingTime as number | undefined,
+      image: (data.image as string | undefined) || undefined,
     };
   }
 
@@ -76,6 +82,9 @@ export async function getPost(slug: string): Promise<Post | null> {
       description: (data.description as string) ?? "",
       date: (data.date as string) ?? "",
       author: data.author as string | undefined,
+      category: data.category as string | undefined,
+      readingTime: data.readingTime as number | undefined,
+      image: (data.image as string | undefined) || undefined,
       contentHtml: processed.toString(),
     };
   }

@@ -1,0 +1,11 @@
+---
+description: A fő agent modellje maradjon GPT-5.2
+alwaysApply: true
+---
+
+# Modell alapértelmezés (projekt: site-4)
+
+- A **fő agent** alapértelmezett modellje **GPT-5.2**.
+- **Ne válts modellt** a fő agentben (és ne állíts át defaultot) **csak akkor**, ha a felhasználó **kifejezetten** más modellt kér.
+- Ha nincs explicit kérés modellváltásra, **maradj GPT-5.2-n**.
+- **Subagentek** esetén: **örököljék** a fő agent modelljét (GPT-5.2), és **csak explicit user kérésre** használj eltérő modellt.

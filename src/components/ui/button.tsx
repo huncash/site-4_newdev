@@ -12,12 +12,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-sky-400 text-slate-950 font-semibold shadow hover:bg-sky-300",
+          "bg-brand text-brand-foreground font-semibold shadow hover:bg-brand-dark",
         secondary:
-          "bg-slate-800 text-slate-100 shadow-sm hover:bg-slate-700",
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         outline:
-          "border border-slate-700 bg-slate-900 text-slate-100 shadow-sm hover:bg-slate-800 hover:text-white",
-        ghost: "hover:bg-slate-800 hover:text-slate-100 text-slate-300",
+          "border border-border bg-background text-foreground shadow-sm hover:bg-secondary",
+        ghost: "text-foreground hover:bg-secondary",
       },
       size: {
         default: "h-9 px-4 py-2",

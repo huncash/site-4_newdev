@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
@@ -51,7 +52,7 @@ export interface CatalogProps {
   className?: string;
 }
 
-export function Catalog({ products, basePath = "/product", className }: CatalogProps) {
+export function Catalog({ products, basePath = "/termekek", className }: CatalogProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -78,51 +79,98 @@ export function Catalog({ products, basePath = "/product", className }: CatalogP
 
   const result = applySort(applyFilters(products, q, cat), sort);
 
+  const listPath = basePath;
+
+  const catalogHref = (() => {
+    const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (sort && sort !== "name-asc") params.set("sort", sort);
+    const qs = params.toString();
+    return qs ? `${listPath}?${qs}` : listPath;
+  })();
+
+  const categoryFilterHref = (category: string) => {
+    const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (category) params.set("cat", category);
+    if (sort && sort !== "name-asc") params.set("sort", sort);
+    const qs = params.toString();
+    return qs ? `${listPath}?${qs}` : listPath;
+  };
+
   return (
-    <div className={cn("flex flex-col gap-6", className)}>
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-800 bg-slate-900 p-4 shadow-sm">
+    <div className={cn("flex flex-col gap-3", className)}>
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2.5 shadow-sm">
         <input
           type="search"
           value={q}
           onChange={(e) => setParam("q", e.target.value)}
           placeholder="Keresés..."
-          className="h-9 flex-1 min-w-[160px] rounded-md border border-slate-700 bg-slate-950 px-3 text-sm text-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+          aria-label="Keresés termékek között"
+          className="h-8 flex-1 min-w-[160px] rounded-md border border-border bg-background px-2.5 text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
         />
-
-        {categories.length > 0 ? (
-          <select
-            value={cat}
-            onChange={(e) => setParam("cat", e.target.value)}
-            className="h-9 rounded-md border border-slate-700 bg-slate-950 px-3 text-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-          >
-            <option value="">Összes kategória</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        ) : null}
 
         <select
           value={sort}
           onChange={(e) => setParam("sort", e.target.value)}
-          className="h-9 rounded-md border border-slate-700 bg-slate-950 px-3 text-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+          aria-label="Rendezés"
+          className="h-8 rounded-md border border-border bg-background px-2.5 text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
         >
           {SORT_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
 
-        <span className="ml-auto text-xs text-slate-400">
+        <span className="ml-auto text-[11px] tabular-nums text-muted-foreground">
           {result.length} termék
         </span>
       </div>
 
+      {categories.length > 0 ? (
+        <div
+          className="flex gap-1.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          role="navigation"
+          aria-label="Kategóriák"
+        >
+          <Link
+            href={catalogHref}
+            className={cn(
+              "shrink-0 rounded-md border px-2 py-1 text-xs transition-colors",
+              !cat
+                ? "border-brand bg-brand/10 text-brand"
+                : "border-border text-muted-foreground hover:border-brand/40 hover:text-foreground"
+            )}
+          >
+            Összes
+          </Link>
+          {categories.map((c) => (
+            <Link
+              key={c}
+              href={categoryFilterHref(c)}
+              className={cn(
+                "shrink-0 rounded-md border px-2 py-1 text-xs transition-colors",
+                cat === c
+                  ? "border-brand bg-brand/10 text-brand"
+                  : "border-border text-muted-foreground hover:border-brand/40 hover:text-foreground"
+              )}
+            >
+              {c}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+
       {result.length === 0 ? (
-        <p className="text-sm text-slate-400">Nincs találat.</p>
+        <p className="text-sm text-muted-foreground">Nincs találat.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {result.map((product) => (
-            <a key={product.id} href={`${basePath}/${product.id}`} className="block">
+            <Link
+              key={product.id}
+              href={`${basePath}/${product.id}`}
+              className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              aria-label={`${product.name} – részletek`}
+            >
               <ProductCard
                 title={product.name}
                 price={product.price}
@@ -131,7 +179,7 @@ export function Catalog({ products, basePath = "/product", className }: CatalogP
                 badge={product.badge}
                 editable={product.editable}
               />
-            </a>
+            </Link>
           ))}
         </div>
       )}
