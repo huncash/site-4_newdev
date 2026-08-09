@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start --port 3003",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "deploy": "git add . && git commit -m \"Auto deploy\" && git push origin main && ssh vmvrgohu@195.228.152.141 \"cd /var/www/rendezvenyarnyekolas-app && git pull origin main && npm install && npm run build && pm2 restart rendezvenyarnyekolas-app\""
+    "deploy": "git add . && git commit -m \"Auto deploy\" && git push origin main && ssh vmvrgohu@195.228.152.141 \"cd /var/www/site-4 && git remote set-url origin https://github.com/huncash/site-4_newdev.git && git pull origin main && npm install && npm run build && pm2 restart site-4\""
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",
