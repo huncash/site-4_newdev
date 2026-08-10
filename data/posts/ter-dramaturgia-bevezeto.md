@@ -1,11 +1,10 @@
 ---
 title: "Tér-dramaturgia rendezvényen — mit ad hozzá a textil-dekor"
-description: "A festett és nyomtatott elasztikus ponyva nem díszítés, hanem tér-dramaturgia: zónákra bontja a helyszínt, vezeti a tekintetet és a tömeget, hangulatot tart össze."
+description: "A festett és printed elasztikus ponyva nem díszítés, hanem tér-dramaturgia: zónákra bontja a helyszínt, vezeti a tekintetet és a tömeget, hangulatot tart össze."
 date: "2026-02-03"
 author: "Szerkesztőség"
 category: "Pozicionálás"
-readingTime: 3
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/5c4fd9ce-322c-4b06-808f-9e8ef6a45269/rendezvenyarnyekolas-kozter-hangulatkep.png"
 imageAlt: "Köztéri rendezvény fölé feszített elasztikus dekor ponyva, hangulatkép"
@@ -66,7 +65,7 @@ A bérelhető készlet két fő ágra bomlik:
    átmenetek, UV-aktív kiemelésekkel jól együttműködik. Ezt a vonalat
    választják a fesztiválok, természeti közegben tartott események,
    alapítványi ünnepségek.
-2. **Nyomtatott lycra.** Digitálisan nyomtatott, éles geometria, márkás
+2. **Printed lycra.** Digitálisan nyomtatott, éles geometria, márkás
    minták, fotórealisztikus felületek. Konferenciák, márka-aktivációk,
    városi rendezvények dolgoznak vele leggyakrabban.
 

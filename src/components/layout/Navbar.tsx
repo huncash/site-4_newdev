@@ -4,15 +4,14 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { MENU_ITEMS } from "@/config/menu";
-import { useCartStore } from "@/lib/cart-store";
+import { useCartCount } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
 
 export function Navbar({ logoHref = "/", className }: { logoHref?: string; className?: string }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
-  const cartItems = useCartStore();
-  const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const totalCartCount = useCartCount();
 
   function handleSearch(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,9 +54,9 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
 
         <div className="flex w-full shrink-0 items-center gap-2 md:ml-auto md:w-auto sm:gap-3">
           <a
-            href="/kapcsolat"
+            href="/kosar"
             className="relative flex shrink-0 items-center justify-center p-2 text-brand-foreground hover:bg-white/10 rounded-md"
-            aria-label="Kosár"
+            aria-label={`Kosár megtekintése (${totalCartCount} tétel)`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +124,15 @@ export function Navbar({ logoHref = "/", className }: { logoHref?: string; class
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href="/kosar"
+                onClick={() => setOpen(false)}
+                className="block rounded-md px-3 py-2 text-sm font-bold text-brand-foreground hover:bg-white/10"
+              >
+                Kosár {totalCartCount > 0 ? `(${totalCartCount})` : ""}
+              </a>
+            </li>
           </ul>
         </div>
       ) : null}

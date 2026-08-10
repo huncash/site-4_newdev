@@ -4,14 +4,13 @@ description: "Mikor érdemes esőálló, kamion-ponyva alapú funkcionális fel�
 date: "2026-05-26"
 author: "Szerkesztőség"
 category: "Funkcionális"
-readingTime: 2
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/e9ebc5f8-fab6-4c0d-95c4-a85ac24d32bd/rendezvenyarnyekolas-szabadteri-esti-alulnezet.png"
-imageAlt: "Szabadtéri esti alulnézet dekor ponyvával"
+imageAlt: "Szabadtéri esti rendezvény ponyva alulnézetből"
 ---
 
-A festett és nyomtatott dekor-ponyváink nem esőállóak. Ezt nyíltan
+A festett és printed dekor-ponyváink nem esőállóak. Ezt nyíltan
 elmondjuk, és gyakran ez vezet a következő kérdéshez: *"akkor a
 hangtechnikát hogyan védjük csapadék ellen?" Erre van külön, funkcionális*
 készletünk — kamion-ponyva alapú, drótsodronnyal erősített felületek,
@@ -30,7 +29,7 @@ Három fő elem:
 
 Ezek nem dekorelemek, és nem is annak látszanak: szürke, fekete,
 matt sötét felületek, kifejezetten azért, hogy a fő-látvány maradjon
-a festett vagy nyomtatott felületeké.
+a festett vagy printed felületeké.
 
 ## Hova jó és hova nem
 
@@ -70,7 +69,7 @@ oldalra, fölé* a helye.
 
 A leggyakoribb kompozíció:
 
-- Vendég-zóna fölött: festett vagy nyomtatott dekor (látvány, hangulat,
+- Vendég-zóna fölött: festett vagy printed dekor (látvány, hangulat,
   nem esőálló).
 - Hangtechnika fölött, oldalt: funkcionális esőálló (víz-védelem).
 
@@ -101,3 +100,4 @@ turné alá.
 
 A funkcionális készlet részletes leírása, méretek és felhasználási
 javaslatok: [Esőálló funkcionális ponyva aloldal](/esoallo-ponyva).
+

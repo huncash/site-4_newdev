@@ -4,11 +4,10 @@ description: "Mit ad a tánctér fölé feszített elasztikus dekor ponyva a han
 date: "2026-03-31"
 author: "Szerkesztőség"
 category: "Hangulat"
-readingTime: 2
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/f802eee0-d76d-4a21-a3e5-37ba39ee7683/rendezvenyarnyekolas-shadow-field.png"
-imageAlt: "Dekor ponyva árnyéka kültéri rendezvénytéren"
+imageAlt: "Tánctér fölé feszített csillag-szerű elasztikus dekor ponyva"
 ---
 
 A tánctér felett a dekor sosem dekoráció, hanem határoló réteg. Ez az,

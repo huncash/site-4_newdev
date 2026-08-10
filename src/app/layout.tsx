@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { ConsentBanner } from "@/components/legal/ConsentBanner";
 import { CONTENT } from "@/data/content";
 import "@/styles/globals.css";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           catalogLinks={[...CONTENT.footer.catalogLinks]}
           aboutLinks={[...CONTENT.footer.aboutLinks]}
         />
+        <ConsentBanner />
       </body>
     </html>
   );

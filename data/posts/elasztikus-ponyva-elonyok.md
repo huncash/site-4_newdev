@@ -4,11 +4,10 @@ description: "Az elasztikus textil-ponyva előnyei rendezvény-dekor és árnyé
 date: "2026-02-17"
 author: "Szerkesztőség"
 category: "Anyag"
-readingTime: 3
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/5376e3a3-119b-44a4-aac1-7f720413c910/rendezvenyarnyekolas-organic-canopy.png"
-imageAlt: "Organikus mintázatú elasztikus dekor ponyva feszítve"
+imageAlt: "Organikus motívumú elasztikus dekor ponyva köztéri rendezvény fölött"
 ---
 
 Egy rendezvény-dekor anyag-választása nem ízlés kérdése, hanem kockázat-

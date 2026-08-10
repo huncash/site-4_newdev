@@ -1,29 +1,26 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getProducts } from "@/lib/data-provider";
+
 import { Catalog } from "@/components/Catalog";
+import { products } from "@/data/catalog";
 
 export const metadata: Metadata = {
-  title: "Termékkatalógus | Rendezvényárnyékolás",
-  description: "Lycra dekorponyvák, árnyékoló elemek és UV kiegészítők katalógusa.",
+  title:
+    "Katalógus — dekor ponyvák bérlése és UV tartozékok | rendezvenyarnyekolas.hu",
+  description:
+    "Bérelhető kézzel festett és nyomtatott lycra dekor ponyvák, valamint UV PAR spotok és kültéri UV blacklight lámpák rendezvényekre. Cikkszám, kategória és ár szerint kereshető katalógus.",
 };
 
 export default function TermekekPage() {
-  const products = getProducts();
-
   return (
-    <main className="mx-auto max-w-7xl px-4 pb-6 pt-4 sm:pb-8 sm:pt-6">
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-          Termékkatalógus
-        </h1>
-        <p className="mt-1 text-sm leading-snug text-muted-foreground">
-          Bérelhető dekorfelületek és megvásárolható UV kellékek rendezvényekre.
-        </p>
-      </div>
-      <Suspense fallback={<div className="text-muted-foreground">Katalógus betöltése...</div>}>
-        <Catalog products={products} basePath="/termekek" />
-      </Suspense>
-    </main>
+    <Suspense
+      fallback={
+        <div className="mx-auto max-w-6xl px-6 py-12 text-muted-foreground">
+          Katalógus betöltése…
+        </div>
+      }
+    >
+      <Catalog products={products} />
+    </Suspense>
   );
 }

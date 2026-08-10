@@ -1,37 +1,20 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Referenciák — dekor ponyva projektjeink képeken | Rendezvényárnyékolás",
+  title: "Referenciák — dekor ponyva projektjeink képeken",
   description:
-    "Nappali árnyékolás, esti UV-látvány, telepítési pillanatok és természetközeli elhelyezések — saját munkáinkból.",
+    "Valós referenciaképek kültéri és városi rendezvényekről: nappali árnyékolás, UV-aktív esti látvány és telepítési részletek dekor ponyváinkkal.",
 };
 
-interface GalleryImage {
-  src: string;
-  alt: string;
-}
-
-interface GallerySection {
-  slug: string;
-  label: string;
-  title: string;
-  description: string;
-  images: GalleryImage[];
-  wide?: boolean;
-}
-
-const GALLERY_SECTIONS: GallerySection[] = [
+const categories = [
   {
-    slug: "varosi-setalo",
-    label: "Városban",
     title: "Városi sétálóutcai installációk",
-    description:
-      "A legerősebb referenciáink közé tartoznak a belvárosi, homlokzatok közé kifeszített felületek, ahol a dekor egyszerre ad árnyékot és markáns látványt.",
-    wide: true,
+    desc: "A legerősebb referenciáink közé tartoznak a belvárosi, homlokzatok közé kifeszített felületek, ahol a dekor egyszerre ad árnyékot és markáns látványt.",
     images: [
       {
         src: "/img/gallery/nappali-foutca.png",
-        alt: "Nyomtatott lycra dekorponyva nappali telepítésben egy belvárosi sétálóutca fölött.",
+        alt: "Printed lycra dekorponyva nappali telepítésben egy belvárosi sétálóutca fölött.",
       },
       {
         src: "/img/gallery/kozter-hangulatkep.png",
@@ -40,11 +23,8 @@ const GALLERY_SECTIONS: GallerySection[] = [
     ],
   },
   {
-    slug: "alulnezet",
-    label: "Perspektíva",
     title: "Alulnézetből ikonikus forma",
-    description:
-      "A kifeszített geometriák alulról nézve adják a legerősebb élményt; a minta és a feszesség ebből a perspektívából a legszembetűnőbb.",
+    desc: "A kifeszített geometriák alulról nézve adják a legerősebb élményt; a minta és a feszesség ebből a perspektívából a legszembetűnőbb.",
     images: [
       {
         src: "/img/gallery/nappali-alulnezet.png",
@@ -57,11 +37,8 @@ const GALLERY_SECTIONS: GallerySection[] = [
     ],
   },
   {
-    slug: "telepites",
-    label: "Telepítés",
     title: "Telepítés valós helyszínen",
-    description:
-      "A kifeszítést mi végezzük; emelőkosaras munkáknál a megrendelő technikai csapatával dolgozunk együtt, a meglévő városi infrastruktúrához igazodva.",
+    desc: "A kifeszítést mi végezzük; emelőkosaras munkáknál a megrendelő technikai csapatával dolgozunk együtt.",
     images: [
       {
         src: "/img/gallery/setaloutca-telepites.png",
@@ -74,12 +51,8 @@ const GALLERY_SECTIONS: GallerySection[] = [
     ],
   },
   {
-    slug: "tancter",
-    label: "Belső tér",
     title: "Tánctér fölötti nagy fesztáv",
-    description:
-      "Nagyméretű, karakteres felületek tánctér- és programzónák fölé, ahol az árnyék és a vizuális fókusz egyszerre fontos.",
-    wide: true,
+    desc: "Nagyméretű, karakteres felületek tánctér- és programzónák fölé, ahol az árnyék és a vizuális fókusz egyszerre fontos.",
     images: [
       {
         src: "/img/gallery/stage-canopy.png",
@@ -92,11 +65,8 @@ const GALLERY_SECTIONS: GallerySection[] = [
     ],
   },
   {
-    slug: "uv-nappal",
-    label: "UV & nappal",
     title: "Esti UV és nappali nyílt tér",
-    description:
-      "Ugyanaz a műfaj nappal hasznos árnyékolás, este pedig külön látványréteg lehet — helyszíntől és fénytől függően.",
+    desc: "Ugyanaz a műfaj nappal hasznos árnyékolás, este pedig külön látványréteg lehet — helyszíntől és fénytől függően.",
     images: [
       {
         src: "/img/gallery/hero-night.png",
@@ -109,15 +79,12 @@ const GALLERY_SECTIONS: GallerySection[] = [
     ],
   },
   {
-    slug: "kulteri-arnyekolas",
-    label: "Kültér",
     title: "Nyílt téri árnyékolás és előkészítés",
-    description:
-      "Nagyobb kültéri rendezvényeken a vizuális fókusz mellett az árnyékhatás és a precíz előkészítés is fontos része a munkának.",
+    desc: "Nagyobb kültéri rendezvényeken a vizuális fókusz mellett az árnyékhatás és a precíz előkészítés is fontos része a munkának.",
     images: [
       {
         src: "/img/gallery/day-field.png",
-        alt: "Nappali kültéri rendezvényen kifeszített nyomtatott lycra dekorponyva nyílt tér fölött.",
+        alt: "Nappali kültéri rendezvényen kifeszített printed lycra dekorponyva nyílt tér fölött.",
       },
       {
         src: "/img/gallery/installation.png",
@@ -127,94 +94,71 @@ const GALLERY_SECTIONS: GallerySection[] = [
   },
 ];
 
-export default function ReferencesPage() {
+export default function ReferenciakPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <section className="border-b border-border bg-secondary px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-4xl">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand">
+    <>
+      <section className="bg-section-dark py-14 text-section-dark-foreground sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <span className="inline-block rounded-full border border-brand/60 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand">
             Referenciák
-          </p>
-          <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl">
+          </span>
+          <h1 className="mt-4 text-3xl font-bold sm:text-4xl md:text-5xl">
             Valós projektek képeken
           </h1>
-          <p className="max-w-2xl text-lg text-muted-foreground">
-            Nappali árnyékolás, esti UV-látvány, telepítési pillanatok és természetközeli
-            elhelyezések — a lenti képek saját munkáinkból mutatnak részleteket.
+          <p className="mx-auto mt-4 max-w-2xl text-base opacity-90 sm:text-lg">
+            Nappali árnyékolás, esti UV-látvány, telepítési pillanatok — a lenti
+            képek saját munkáinkból mutatnak részleteket.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="flex flex-col gap-20">
-          {GALLERY_SECTIONS.map((section, i) => (
-            <div
-              key={section.slug}
-              className={[
-                "grid items-center gap-10",
-                section.wide ? "md:grid-cols-1" : "md:grid-cols-2",
-                !section.wide && i % 2 !== 0 ? "md:[&>*:first-child]:order-last" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+      <section className="bg-background py-12 sm:py-16">
+        <div className="mx-auto max-w-6xl space-y-10 px-4">
+          {categories.map((c) => (
+            <article
+              key={c.title}
+              className="overflow-hidden rounded-md border border-border bg-card shadow-sm"
             >
-              <div className="overflow-hidden rounded-lg border border-border bg-card">
-                <div
-                  className={
-                    section.images.length > 1
-                      ? "grid gap-px bg-border sm:grid-cols-2"
-                      : undefined
-                  }
-                >
-                  {section.images.map((image) => (
-                    // eslint-disable-next-line @next/next/no-img-element
+              <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
+                <div className="p-6 lg:p-8">
+                  <h2 className="text-2xl font-semibold">{c.title}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {c.desc}
+                  </p>
+                </div>
+                <div className="grid gap-px bg-border sm:grid-cols-2">
+                  {c.images.map((image) => (
                     <img
                       key={image.src}
                       src={image.src}
                       alt={image.alt}
-                      className={
-                        section.wide && section.images.length === 1
-                          ? "aspect-[21/9] w-full object-cover"
-                          : "aspect-[4/3] w-full bg-card object-cover"
-                      }
+                      className="aspect-[4/3] w-full bg-card object-cover"
                       loading="lazy"
                     />
                   ))}
                 </div>
               </div>
-
-              <div className="flex flex-col gap-3">
-                <p className="text-xs font-semibold uppercase tracking-widest text-brand">
-                  {section.label}
-                </p>
-                <h2 className="text-2xl font-bold leading-snug text-foreground md:text-3xl">
-                  {section.title}
-                </h2>
-                <p className={section.wide ? "max-w-2xl text-muted-foreground" : "text-muted-foreground"}>
-                  {section.description}
-                </p>
-              </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
 
-      <section className="border-t border-border bg-section-dark px-4 py-16 text-center text-section-dark-foreground">
-        <div className="mx-auto max-w-xl">
-          <h2 className="mb-3 text-2xl font-bold text-section-dark-foreground">
+      <section className="bg-section-dark py-12 text-section-dark-foreground sm:py-16">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <h2 className="text-2xl font-semibold sm:text-3xl">
             Hasonló rendezvényt szervez?
           </h2>
-          <p className="mb-8 text-section-dark-foreground/85">
+          <p className="mt-3 opacity-90">
             Kérjen ajánlatot — helyszínhez és funkcióhoz illesztett felületet javaslunk.
           </p>
-          <a
+          <Link
             href="/kapcsolat"
-            className="inline-flex items-center rounded-lg bg-brand px-8 py-3 text-sm font-bold text-brand-foreground hover:bg-brand-dark transition-colors"
+            className="mt-6 inline-flex items-center justify-center rounded-md bg-brand px-6 py-3 text-sm font-semibold uppercase tracking-wider text-brand-foreground hover:bg-brand-dark"
           >
             Ajánlatkérés
-          </a>
+          </Link>
         </div>
       </section>
-    </main>
+    </>
   );
 }

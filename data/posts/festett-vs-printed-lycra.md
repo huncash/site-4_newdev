@@ -1,18 +1,17 @@
 ---
-title: "Festett vs. nyomtatott lycra — mikor melyiket válaszd"
-description: "Két karakter, egy szerkezet: kézzel festett organikus ponyva vagy digitálisan nyomtatott lycra. Melyiket mikor érdemes választani egy rendezvényre."
+title: "Festett vs. printed lycra — mikor melyiket válaszd"
+description: "Két karakter, egy szerkezet: kézzel festett organikus ponyva vagy digitálisan nyomtatott printed lycra. Melyiket mikor érdemes választani egy rendezvényre."
 date: "2026-03-03"
 author: "Szerkesztőség"
 category: "Anyag"
-readingTime: 2
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/399f0418-d038-47a4-98e7-ec39c4c6fea3/rendezvenyarnyekolas-uv-close.png"
-imageAlt: "UV-aktív dekor ponyva közeli mintázata"
+imageAlt: "UV-fénnyel megvilágított festett dekor ponyva közelről"
 ---
 
 A bérelhető elasztikus dekor-ponyvák két fő stílusra bomlanak: **kézzel
-festett** és **nyomtatott lycra**. A szerkezet (a tartórendszer, a
+festett** és **printed lycra**. A szerkezet (a tartórendszer, a
 felfüggesztés, a kifeszítés módja) ugyanaz — a felület karaktere és
 gyártási logikája más. A választás nem ízlésen múlik, hanem a rendezvény
 karakterén.
@@ -34,7 +33,7 @@ Tipikus felhasználói: fesztiválok, természeti közegben tartott
 események, alapítványi ünnepségek, szabadtéri művészeti programok,
 klub-rezidencia estek, gyereknapok.
 
-## A nyomtatott lycra vonal
+## A printed lycra vonal
 
 A nyomtatott elasztikus ponyvák digitális (jellemzően nagy felbontású
 szublimációs) nyomtatással készülnek. Karakterük élesebb:
@@ -51,22 +50,22 @@ brand-rendezvények, sportesemény-helyszínek, városi PR-akciók.
 
 Néhány gyors döntési pont:
 
-- **Van márka-arculat, logó, kötelező vizuális elem?** → Nyomtatott lycra.
+- **Van márka-arculat, logó, kötelező vizuális elem?** → Printed lycra.
 - **A hangsúly a hangulaton, a "fotózható" élményen van?** → Festett.
 - **A rendezvény köré épül UV-világítás?** → Festett.
-- **Több helyszínen, sorozatban kell ugyanaz a látvány?** → Nyomtatott.
+- **Több helyszínen, sorozatban kell ugyanaz a látvány?** → Printed.
 - **A megrendelő egyszer használja, és nem akarja "olyan, mint mindenkié"
   érzetet kelteni?** → Festett.
 - **Esti, sötét helyszín, ahol a vetített fény dominál?** → Inkább
-  nyomtatott (a festett kompozíciók sötétben kevésbé olvashatóak).
+  printed (a festett kompozíciók sötétben kevésbé olvashatóak).
 
 ## Mit nem érdemes keverni
 
 Egyetlen szerkezeten belül a két stílus technikailag keverhető, de
-ritkán szép. A festett organikus felület és a nyomtatott geometriai minta
+ritkán szép. A festett organikus felület és a printed geometriai minta
 mellette egymást nyomja agyon. Ha mindenképpen mindkettő kell egy
 rendezvényen, akkor érdemes zónákra bontani: pl. érkezési kapu és
-fő-szín nyomtatott (márkás), tánctér és relax-zóna festett (hangulati).
+fő-szín printed (márkás), tánctér és relax-zóna festett (hangulati).
 
 ## UV-világítás megfontolások
 
@@ -78,7 +77,7 @@ specifikáció kiválasztásában. (Erről külön cikkben írunk részletesen.)
 
 ## Mit ad ugyanúgy mindkét vonal
 
-Függetlenül attól, hogy festett vagy nyomtatott darabokat választasz, a
+Függetlenül attól, hogy festett vagy printed darabokat választasz, a
 következő szolgáltatás-elemek azonosak:
 
 - Helyszín-felmérés (igény szerint 3D-lézer szkennel).
@@ -90,8 +89,8 @@ következő szolgáltatás-elemek azonosak:
 
 ## Bérlés és előfoglalás
 
-A festett és nyomtatott készlet egyaránt foglalható előre. A leggyakoribb
+A festett és printed készlet egyaránt foglalható előre. A leggyakoribb
 hibridizmus, amit látunk: az ügyfél a struktúrát foglalja le (méret,
 csúcs-felépítés, helyszín), és csak a rendezvény előtt 2-3 héttel
-dönti el, hogy festett vagy nyomtatott felülettel kéri. Ez működik — a
+dönti el, hogy festett vagy printed felülettel kéri. Ez működik — a
 szerkezet ugyanaz.

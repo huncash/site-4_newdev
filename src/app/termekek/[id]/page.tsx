@@ -1,21 +1,35 @@
-import { getProductById, getProducts } from "@/lib/data-provider";
-import { ProductDetail } from "@/components/ProductDetail";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+import { ProductDetail } from "@/components/ProductDetail";
+import { getCategory, getProduct, products } from "@/data/catalog";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
+export function generateStaticParams() {
+  return products.map((p) => ({ id: p.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const product = getProduct(id);
+  if (!product) return {};
+  const category = getCategory(product.categorySlug);
+  return {
+    title: `${product.name} — ${category?.shortName ?? "Katalógus"} | rendezvenyarnyekolas.hu`,
+    description: product.shortDescription,
+  };
+}
+
 export default async function ProductDetailPage({ params }: Props) {
   const { id } = await params;
-  const product = getProductById(Number(id));
+  const product = getProduct(id);
 
   if (!product) {
     notFound();
   }
 
-  const allProducts = getProducts();
-  const related = allProducts.filter((p) => p.id !== product.id).slice(0, 4);
-
-  return <ProductDetail product={product} relatedProducts={related} />;
+  return <ProductDetail product={product} />;
 }

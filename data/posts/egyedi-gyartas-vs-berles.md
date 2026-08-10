@@ -4,14 +4,13 @@ description: "A meglévő készlet bérlése vs. helyszínre méretezett, 3D-szk
 date: "2026-06-09"
 author: "Szerkesztőség"
 category: "Üzlet"
-readingTime: 3
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/5c765be6-fb3c-4e6d-823e-0a66ef05c441/rendezvenyarnyekolas-nappali-alulnezet.png"
 imageAlt: "Nappali fényben rendezvény ponyva alulnézetből"
 ---
 
-Az alapszolgáltatásunk a bérlés: meglévő, festett és nyomtatott
+Az alapszolgáltatásunk a bérlés: meglévő, festett és printed
 elasztikus dekor-ponyva-készlet, ami már másnap szállítható és pár
 hetes előfoglalással szinte minden rendezvényre felmegy. Az *egyedi
 gyártás* egy külön, ritkábban választott szolgáltatás — évente csak
@@ -55,7 +54,7 @@ Néhány döntési pont:
   megfontolandó.
 - **2 hét múlva van a rendezvény?** → Bérlés (egyedi gyártás már
   nem fér bele).
-- **A márkának kötelező a precíz arculat?** → Egyedi gyártás nyomtatott
+- **A márkának kötelező a precíz arculat?** → Egyedi gyártás printed
   vonalon.
 - **Természeti közeg, organikus hangulat?** → Bérlés festett vonalon
   szinte mindig elég.
@@ -68,7 +67,7 @@ kövek:
 1. **Felmérés** (1 hét) — helyszín-bejárás, 3D-szken, igények
    pontosítása.
 2. **Tervezés** (2 hét) — felület-méretezés, motívum-koncepció,
-   technológiai választás (festett vagy nyomtatott).
+   technológiai választás (festett vagy printed).
 3. **Gyártás** (3-4 hét) — szövet-rendelés, festés vagy nyomtatás,
    feszítő-pontok elkészítése.
 4. **Tesztfeszítés** (1 nap) — műhelyben vagy próbahelyszínen, hogy

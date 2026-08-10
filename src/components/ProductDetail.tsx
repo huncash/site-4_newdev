@@ -1,230 +1,422 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import type { Product } from "@/lib/types";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+import { useEffect, useState } from "react";
 
-export interface ProductDetailProps {
-  product: Product;
-  relatedProducts?: Product[];
-  onAddToCart?: () => void;
-  onRequestQuote?: () => void;
+import { PriceBadge } from "@/components/PriceBadge";
+import {
+  getCategory,
+  type Product,
+} from "@/data/catalog";
+import { addItem, useCartStore } from "@/lib/cart-store";
+import {
+  getLightingRecommendation,
+  tarpFitLabel,
+  tarpFitTone,
+} from "@/lib/lighting-recommendation";
+
+type GalleryImage = { src: string; alt: string; caption?: string };
+
+function buildGallery(product: Product): GalleryImage[] {
+  const out: GalleryImage[] = [];
+  if (product.coverImage) {
+    out.push({
+      src: product.coverImage,
+      alt: product.coverImageAlt || product.name,
+    });
+  }
+  if (product.uvActiveImage) {
+    out.push({
+      src: product.uvActiveImage,
+      alt: product.uvActiveImageAlt || `${product.name} — UV megvilágítás alatt`,
+      caption: "365 nm UV-A alatt",
+    });
+  }
+  if (product.gallery) {
+    for (const g of product.gallery) {
+      if (out.some((x) => x.src === g.src)) continue;
+      out.push(g);
+    }
+  }
+  return out;
 }
 
-type Tab = "description" | "specs" | "docs";
+function PlusIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+    </svg>
+  );
+}
 
-const crumbLinkClass = "text-muted-foreground hover:text-brand transition-colors";
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path d="M5 12l5 5L20 7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
-export function ProductDetail({
-  product,
-  relatedProducts = [],
-  onAddToCart,
-  onRequestQuote,
-}: ProductDetailProps) {
-  const [activeTab, setActiveTab] = useState<Tab>("description");
-
-  const formattedPriceNet = new Intl.NumberFormat("hu-HU", {
-    style: "currency",
-    currency: "HUF",
-    maximumFractionDigits: 0,
-  }).format(product.price);
-
-  const formattedPriceGross = new Intl.NumberFormat("hu-HU", {
-    style: "currency",
-    currency: "HUF",
-    maximumFractionDigits: 0,
-  }).format(product.price * 1.27);
-
-  const specs = product.specs ? Object.entries(product.specs) : [];
-
-  const tabs: { id: Tab; label: string }[] = [
-    { id: "description", label: "Leírás" },
-    { id: "specs", label: "Műszaki adatok" },
-    { id: "docs", label: "Dokumentáció" },
-  ];
-
-  const categoryHref = product.category
-    ? `/termekek?cat=${encodeURIComponent(product.category)}`
-    : null;
+export function ProductDetail({ product }: { product: Product }) {
+  const category = getCategory(product.categorySlug);
+  const isRental = product.offerType === "rental";
+  const rec = getLightingRecommendation(product);
+  const gallery = buildGallery(product);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const active = gallery[activeIdx];
+  const isUvShot = active?.caption === "365 nm UV-A alatt";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <nav aria-label="Morzsamenü" className="mb-6 text-sm">
-        <ol className="flex flex-wrap items-center gap-x-0">
-          <li className="inline-flex items-center">
-            <Link href="/" className={crumbLinkClass}>
-              Kezdőlap
+    <div className="mx-auto max-w-6xl px-6 py-12">
+      <nav className="text-xs text-muted-foreground">
+        <Link href="/" className="hover:text-foreground">
+          Főoldal
+        </Link>
+        <span className="mx-2">/</span>
+        <Link href="/termekek" className="hover:text-foreground">
+          Katalógus
+        </Link>
+        {category ? (
+          <>
+            <span className="mx-2">/</span>
+            <Link
+              href={`/termekek?cat=${encodeURIComponent(category.slug)}`}
+              className="hover:text-foreground"
+            >
+              {category.shortName}
             </Link>
-            <span className="mx-2" aria-hidden="true">
-              /
-            </span>
-          </li>
-          <li className="inline-flex items-center">
-            <Link href="/termekek" className={crumbLinkClass}>
-              Katalógus
-            </Link>
-            {product.category || product.name ? (
-              <span className="mx-2" aria-hidden="true">
-                /
-              </span>
-            ) : null}
-          </li>
-          {product.category && categoryHref ? (
-            <li className="inline-flex items-center">
-              <Link href={categoryHref} className={crumbLinkClass}>
-                {product.category}
-              </Link>
-              <span className="mx-2" aria-hidden="true">
-                /
-              </span>
-            </li>
-          ) : null}
-          <li className="inline-flex items-center">
-            <span className="font-medium text-foreground" aria-current="page">
-              {product.name}
-            </span>
-          </li>
-        </ol>
+          </>
+        ) : null}
+        <span className="mx-2">/</span>
+        <span className="text-foreground">{product.name}</span>
       </nav>
 
-      <div className="grid gap-10 md:grid-cols-2">
-        <section>
-          <div className="aspect-square overflow-hidden rounded-xl bg-card border border-border">
-            {product.imageUrl && !product.imageUrl.includes("feltoltes-alatt") ? (
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                <p className="text-sm font-medium text-muted-foreground">Feltöltés alatt</p>
-                <p className="text-xs text-muted-foreground">A kép hamarosan elérhető lesz</p>
+      <div className="mt-6 grid gap-10 lg:grid-cols-[1.1fr_1fr]">
+        <figure className="m-0">
+          {active ? (
+            <>
+              <div
+                className={`flex aspect-square items-center justify-center overflow-hidden rounded border border-border ${
+                  isUvShot ? "bg-black/90" : "bg-muted/40"
+                }`}
+              >
+                <img
+                  src={active.src}
+                  alt={active.alt}
+                  loading="eager"
+                  decoding="async"
+                  sizes="(min-width: 1024px) 640px, 100vw"
+                  className="h-full w-full object-contain"
+                />
               </div>
-            )}
-          </div>
-          {product.imageUrl && !product.imageUrl.includes("feltoltes-alatt") ? (
-            <p className="mt-2 text-xs text-muted-foreground">
-              A termékképek kizárólag illusztrációk.
-            </p>
+              {active.caption ? (
+                <div className="mt-1 text-[11px] font-medium uppercase tracking-[0.2em] text-brand">
+                  {active.caption}
+                </div>
+              ) : null}
+              {gallery.length > 1 ? (
+                <div className="mt-3 grid grid-cols-5 gap-2">
+                  {gallery.map((g, i) => {
+                    const isActive = i === activeIdx;
+                    const thumbUv = g.caption === "365 nm UV-A alatt";
+                    return (
+                      <button
+                        key={g.src}
+                        type="button"
+                        onClick={() => setActiveIdx(i)}
+                        aria-label={`Kép ${i + 1} / ${gallery.length}`}
+                        aria-pressed={isActive}
+                        className={`flex aspect-square items-center justify-center overflow-hidden rounded border transition ${
+                          thumbUv ? "bg-black/90" : "bg-muted/40"
+                        } ${
+                          isActive
+                            ? "border-brand ring-1 ring-brand"
+                            : "border-border hover:border-brand/60"
+                        }`}
+                      >
+                        <img
+                          src={g.src}
+                          alt={g.alt}
+                          loading="lazy"
+                          decoding="async"
+                          sizes="96px"
+                          className="h-full w-full object-contain"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </>
+          ) : (
+            <div className="flex aspect-square items-center justify-center rounded border border-border bg-muted/40 text-sm text-muted-foreground">
+              {isRental ? "Dekor ponyva — illusztráció" : "Tartozék — illusztráció"}
+            </div>
+          )}
+          <figcaption className="mt-2 text-[11px] italic leading-snug text-muted-foreground">
+            A termékképek kizárólag illusztrációk — a gyártó (Steinigke / EUROLITE)
+            katalógusából átvéve. A tényleges méret, minta és kivitel az
+            adatlap és az ajánlat szerint értendő.
+          </figcaption>
+        </figure>
+
+        <div>
+          {category ? (
+            <div className="text-xs font-medium tracking-[0.25em] text-brand">
+              {category.tagline}
+            </div>
           ) : null}
-        </section>
-
-        <section className="flex flex-col gap-4">
-          {product.badge ? (
-            <Badge variant="secondary" className="w-fit">{product.badge}</Badge>
-          ) : null}
-
-          <h1 className="text-3xl font-bold leading-tight text-foreground">{product.name}</h1>
-
-          {product.description ? (
-            <p className="text-sm text-muted-foreground">{product.description}</p>
-          ) : null}
-
-          <div className="rounded-lg border border-border bg-secondary p-4">
-            <p className="text-2xl font-bold text-brand">{formattedPriceNet}</p>
-            <p className="text-xs text-muted-foreground">+ ÁFA / db</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Bruttó: {formattedPriceGross} / db
-            </p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+            {product.name}
+          </h1>
+          <div className="mt-2 text-sm text-muted-foreground">
+            <span className="font-mono">Cikkszám: {product.sku}</span> ·{" "}
+            {product.primaryAttribute} · {product.secondaryAttribute}
           </div>
+          <p className="mt-4 text-foreground">{product.shortDescription}</p>
 
-          <div className="flex flex-col gap-2">
-            <Button className="w-full bg-brand text-brand-foreground font-bold hover:bg-brand-dark" onClick={onRequestQuote} type="button">
-              Ajánlatot kérek erre a termékre
-            </Button>
-            <Button variant="outline" className="w-full" onClick={onAddToCart} type="button">
-              Kosárba teszem
-            </Button>
-          </div>
-        </section>
+          {product.featuredPrice ? (
+            <div className="mt-5">
+              <PriceBadge product={product} variant="detail" />
+            </div>
+          ) : (
+            <div className="mt-5 rounded-md border border-border bg-muted/40 p-4">
+              <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                Bérlés
+              </div>
+              <div className="mt-1 text-lg font-semibold text-foreground">
+                Egyedi árajánlat időpontfoglalással
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground">
+                A bérleti díj a rendezvény dátumától, helyszínétől, a kifeszítendő
+                felülettől és a telepítési feltételektől függ. Új ügyfeleknek
+                Számlázz.hu díjbekérővel, banki jóváírás után igazoljuk vissza.
+              </p>
+            </div>
+          )}
+
+          <ProductActions product={product} isRental={isRental} />
+        </div>
       </div>
 
-      <section className="mt-12 border-t border-border pt-8">
-        <div className="mb-6 flex gap-6 border-b border-border">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={[
-                "pb-2 text-sm font-medium transition-colors",
-                activeTab === tab.id
-                  ? "border-b-2 border-brand text-brand"
-                  : "text-muted-foreground hover:text-foreground",
-              ].join(" ")}
-            >
-              {tab.label}
-            </button>
-          ))}
+      <section className="mt-12 grid gap-10 md:grid-cols-2">
+        <div>
+          <h2 className="text-lg font-semibold tracking-tight">Műszaki adatok</h2>
+          <dl className="mt-4 border-t border-border">
+            {Object.entries(product.specs).map(([k, v]) => (
+              <div
+                key={k}
+                className="grid grid-cols-[180px_1fr] gap-4 border-b border-border py-3 text-sm"
+              >
+                <dt className="text-muted-foreground">{k}</dt>
+                <dd className="text-foreground">{String(v)}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-
-        <div className="prose prose-sm max-w-none prose-headings:text-foreground prose-a:text-brand prose-a:underline prose-a:underline-offset-4 hover:prose-a:text-brand-dark">
-          {activeTab === "description" && (
-            <div>
-              {product.description ? (
-                <p>{product.description}</p>
-              ) : (
-                <p className="text-muted-foreground">Nincs elérhető leírás.</p>
-              )}
-            </div>
-          )}
-
-          {activeTab === "specs" && (
-            <div>
-              {specs.length > 0 ? (
-                <table className="w-full text-sm">
-                  <tbody>
-                    {specs.map(([key, value]) => (
-                      <tr key={key} className="border-b border-border last:border-0">
-                        <td className="py-2 pr-4 font-medium text-foreground">{key}</td>
-                        <td className="py-2 text-muted-foreground">{String(value)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p className="text-muted-foreground">Nincs elérhető műszaki adat.</p>
-              )}
-            </div>
-          )}
-
-          {activeTab === "docs" && (
-            <p className="text-muted-foreground">Nincs elérhető dokumentáció.</p>
-          )}
+        <div>
+          <h2 className="text-lg font-semibold tracking-tight">
+            Tipikus alkalmazás
+          </h2>
+          <ul className="mt-4 grid gap-2 text-sm">
+            {product.useCases.map((u) => (
+              <li
+                key={u}
+                className="rounded border border-border bg-muted/30 px-3 py-2"
+              >
+                {u}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {relatedProducts.length > 0 ? (
-        <section className="mt-12 border-t border-border pt-8">
-          <h2 className="mb-4 text-2xl font-bold text-foreground">Kapcsolódó termékek</h2>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {relatedProducts.map((rel) => (
-              <div key={rel.id} className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-                <div className="aspect-square overflow-hidden bg-secondary">
-                  <img
-                    src={rel.imageUrl}
-                    alt={rel.name}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="p-3">
-                  <p className="text-sm font-medium leading-tight text-foreground">{rel.name}</p>
-                  <p className="mt-1 text-sm text-brand font-semibold">
-                    {new Intl.NumberFormat("hu-HU", {
-                      style: "currency",
-                      currency: "HUF",
-                      maximumFractionDigits: 0,
-                    }).format(rel.price)}
-                  </p>
-                </div>
-              </div>
-            ))}
+      <section className="mt-12">
+        <h2 className="text-lg font-semibold tracking-tight">
+          Fluoreszkáló dekor ponyvához és egyéb rendezvény világítási feladatokhoz
+        </h2>
+        <div
+          className={`mt-4 rounded-md border p-4 ${tarpFitTone(rec.tarpFit)}`}
+        >
+          <div className="text-[11px] uppercase tracking-wider opacity-80">
+            Ajánlás fluoreszkáló (UV-aktív) dekor ponyva alá
           </div>
-        </section>
-      ) : null}
+          <div className="mt-1 text-base font-semibold">
+            {tarpFitLabel(rec.tarpFit)}
+          </div>
+          <p className="mt-2 text-sm leading-relaxed">{rec.tarpFitNote}</p>
+        </div>
+
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              Milyen feladatra javasoljuk
+            </h3>
+            <ul className="mt-3 grid gap-2 text-sm">
+              {rec.bestFor.map((b) => (
+                <li
+                  key={b}
+                  className="rounded border border-border bg-muted/30 px-3 py-2"
+                >
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {rec.notFor && rec.notFor.length > 0 ? (
+            <div>
+              <h3 className="text-sm font-semibold tracking-tight text-foreground">
+                Mire nem ideális
+              </h3>
+              <ul className="mt-3 grid gap-2 text-sm">
+                {rec.notFor.map((n) => (
+                  <li
+                    key={n}
+                    className="rounded border border-dashed border-border px-3 py-2 text-muted-foreground"
+                  >
+                    {n}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+
+        {!isRental ? (
+          <p className="mt-6 text-xs italic leading-relaxed text-muted-foreground">
+            Az ajánlás a tétel műszaki adatlapja (teljesítmény, hullámhossz,
+            vezérlés, IP védettség) alapján készül és tájékoztató jellegű.
+          </p>
+        ) : null}
+      </section>
+    </div>
+  );
+}
+
+function ProductActions({
+  product,
+  isRental,
+}: {
+  product: Product;
+  isRental: boolean;
+}) {
+  const items = useCartStore();
+  const inCart = items.some((x) => x.slug === product.slug);
+  const [justAdded, setJustAdded] = useState(false);
+  const [qty, setQty] = useState(1);
+  const hasPrice = !!product.featuredPrice;
+
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = setTimeout(() => setJustAdded(false), 1400);
+    return () => clearTimeout(t);
+  }, [justAdded]);
+
+  const clampQty = (n: number) => {
+    if (!Number.isFinite(n)) return 1;
+    const i = Math.floor(n);
+    if (i < 1) return 1;
+    if (i > 99) return 99;
+    return i;
+  };
+
+  const handleAdd = () => {
+    if (isRental) return;
+    addItem(
+      { slug: product.slug, name: product.name, sku: product.sku },
+      hasPrice ? qty : 1
+    );
+    setJustAdded(true);
+  };
+
+  if (isRental) {
+    return (
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <Link
+          href={`/kapcsolat?termek=${encodeURIComponent(product.slug)}`}
+          className="rounded bg-brand px-5 py-2.5 font-medium text-brand-foreground hover:bg-brand-dark"
+        >
+          Időpontot foglalok / ajánlatot kérek
+        </Link>
+        <Link
+          href="/termekek"
+          className="rounded border border-border px-5 py-2.5 font-medium text-foreground hover:border-brand"
+        >
+          Vissza a katalógushoz
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="inline-flex items-stretch overflow-hidden rounded border border-border">
+        <button
+          type="button"
+          aria-label="Mennyiség csökkentése"
+          onClick={() => setQty((q) => clampQty(q - 1))}
+          className="px-3 text-foreground hover:bg-muted disabled:opacity-40"
+          disabled={qty <= 1}
+        >
+          −
+        </button>
+        <input
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={99}
+          step={1}
+          value={qty}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (v === "") {
+              setQty(1);
+              return;
+            }
+            setQty(clampQty(parseInt(v, 10)));
+          }}
+          onBlur={(e) => setQty(clampQty(parseInt(e.target.value, 10) || 1))}
+          className="w-14 border-x border-border bg-background py-2 text-center text-foreground outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          aria-label="Mennyiség"
+        />
+        <button
+          type="button"
+          aria-label="Mennyiség növelése"
+          onClick={() => setQty((q) => clampQty(q + 1))}
+          className="px-3 text-foreground hover:bg-muted disabled:opacity-40"
+          disabled={qty >= 99}
+        >
+          +
+        </button>
+      </div>
+      <button
+        type="button"
+        onClick={handleAdd}
+        className={`inline-flex items-center gap-2 rounded border px-5 py-2.5 font-medium transition ${
+          justAdded
+            ? "border-brand bg-brand text-brand-foreground"
+            : inCart
+              ? "border-brand bg-brand/10 text-brand hover:bg-brand hover:text-brand-foreground"
+              : "border-border text-foreground hover:border-brand hover:bg-brand hover:text-brand-foreground"
+        }`}
+      >
+        {justAdded ? (
+          <CheckIcon className="h-4 w-4" />
+        ) : (
+          <PlusIcon className="h-4 w-4" />
+        )}
+        {justAdded
+          ? "Hozzáadva"
+          : inCart
+            ? "Még egy darab a kosárba"
+            : "Kosárba teszem"}
+      </button>
+      <Link
+        href="/kosar"
+        className="rounded border border-border px-5 py-2.5 font-medium text-foreground hover:border-brand"
+      >
+        Kosár megtekintése
+      </Link>
     </div>
   );
 }

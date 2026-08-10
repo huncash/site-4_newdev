@@ -57,9 +57,11 @@ const SECTIONS = [
     ],
   },
   {
-    title: "7. Cookie-k",
+    title: "7. Cookie-k és a beleegyező sáv",
     body: [
-      "Alapvetően a weboldal működéséhez szükséges cookie-kat / tárolást használunk.",
+      "A weboldal első megnyitásakor alsó sávban kérünk beleegyezést. A „Elfogadom” gombbal Ön tudomásul veszi a tájékoztatást, és hozzájárul a szükséges adatkezeléshez / cookie-khoz.",
+      "A beleegyezést a böngésző localStorage-jában tároljuk (rendezvenyarnyekolas-gdpr-consent), hogy ne kelljen minden alkalommal újra megjeleníteni a sávot.",
+      "A partner belépéshez szükséges munkamenet-cookie-k a szolgáltatás működéséhez kellenek.",
       "Marketing- vagy analitikai cookie-kat csak előzetes hozzájárulással indítunk, ha egyáltalán.",
     ],
   },

@@ -4,11 +4,10 @@ description: "Hogyan kerül fel az elasztikus dekor ponyva fák közé fesztivá
 date: "2026-05-12"
 author: "Szerkesztőség"
 category: "Helyszín"
-readingTime: 3
-aiDisclosure: assisted
+aiDisclosure: "assisted"
 editorialReview: true
 image: "/__l5e/assets-v1/9530f2eb-12e4-4b41-a594-0a545cf2a70e/rendezvenyarnyekolas-day-field.png"
-imageAlt: "Nappali kültéri mező fölé feszített dekor ponyva"
+imageAlt: "Fák közé feszített elasztikus dekor ponyva nappali fényben"
 ---
 
 A természeti közegben tartott rendezvények — fesztiválok, parkbeli

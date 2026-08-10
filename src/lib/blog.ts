@@ -39,6 +39,19 @@ function parseAiDisclosure(value: unknown): AiDisclosureKind | undefined {
   return undefined;
 }
 
+/** gray-matter may parse bare YAML dates as Date objects. */
+function formatPostDate(value: unknown): string {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.toISOString().slice(0, 10);
+  }
+  if (typeof value === "string") return value;
+  if (typeof value === "number") {
+    const d = new Date(value);
+    if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  }
+  return "";
+}
+
 const privatePostsDir = join(process.cwd(), "private_data", "posts");
 const dataPostsDir = join(process.cwd(), "data", "posts");
 
@@ -75,9 +88,9 @@ export function getPostMeta(slug: string): PostMeta | null {
       slug,
       title: (data.title as string) ?? slug,
       description: (data.description as string) ?? "",
-      date: (data.date as string) ?? "",
+      date: formatPostDate(data.date),
       author: data.author as string | undefined,
-      category: data.category as string | undefined,
+      category: (data.category as string | undefined) ?? (data.tag as string | undefined),
       readingTime: data.readingTime as number | undefined,
       image: (data.image as string | undefined) || undefined,
       imageAlt: (data.imageAlt as string | undefined) || undefined,
@@ -105,9 +118,9 @@ export async function getPost(slug: string): Promise<Post | null> {
       slug,
       title: (data.title as string) ?? slug,
       description: (data.description as string) ?? "",
-      date: (data.date as string) ?? "",
+      date: formatPostDate(data.date),
       author: data.author as string | undefined,
-      category: data.category as string | undefined,
+      category: (data.category as string | undefined) ?? (data.tag as string | undefined),
       readingTime: data.readingTime as number | undefined,
       image: (data.image as string | undefined) || undefined,
       imageAlt: (data.imageAlt as string | undefined) || undefined,

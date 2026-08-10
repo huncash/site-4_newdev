@@ -135,18 +135,19 @@ export function savePartnerCart(userId: string, items: CartItem[]): CartItem[] {
   const cleaned = items
     .filter(
       (i) =>
-        typeof i.id === "number" &&
+        typeof i.slug === "string" &&
+        i.slug.length > 0 &&
         typeof i.name === "string" &&
-        typeof i.price === "number" &&
-        typeof i.quantity === "number" &&
-        i.quantity > 0
+        typeof i.sku === "string" &&
+        typeof i.qty === "number" &&
+        i.qty > 0
     )
     .slice(0, 100)
     .map((i) => ({
-      id: i.id,
+      slug: String(i.slug).slice(0, 120),
       name: String(i.name).slice(0, 200),
-      price: Number(i.price),
-      quantity: Math.min(999, Math.floor(i.quantity)),
+      sku: String(i.sku).slice(0, 80),
+      qty: Math.min(99, Math.floor(i.qty)),
     }));
 
   const store = loadStore();

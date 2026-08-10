@@ -1,13 +1,12 @@
 import { useSyncExternalStore } from "react";
-import type { Product } from "./types";
+
 import type { CartItem } from "./cart-types";
 
 export type { CartItem };
 
 type Listener = () => void;
 
-const STORAGE_KEY = "prepper_cart_v1";
-const STORAGE_USER_KEY = "prepper_cart_user_id";
+const STORAGE_KEY = "rendezvenyarnyekolas-cart-v1";
 
 let state: CartItem[] = [];
 let hydrated = false;
@@ -26,13 +25,29 @@ function getSnapshot(): CartItem[] {
   return state;
 }
 
+function clampQty(qty: number): number {
+  if (!Number.isFinite(qty)) return 1;
+  return Math.max(1, Math.min(99, Math.floor(qty)));
+}
+
 function readLocal(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
-    const parsed = JSON.parse(raw) as CartItem[];
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter(
+        (x): x is CartItem =>
+          !!x &&
+          typeof x.slug === "string" &&
+          typeof x.name === "string" &&
+          typeof x.sku === "string" &&
+          typeof x.qty === "number" &&
+          x.qty > 0
+      )
+      .map((x) => ({ ...x, qty: clampQty(x.qty) }));
   } catch {
     return [];
   }
@@ -59,36 +74,51 @@ function setState(next: CartItem[]) {
   notify();
 }
 
-export function addItem(product: Pick<Product, "id" | "name" | "price">): void {
+export function addItem(
+  item: Omit<CartItem, "qty">,
+  qty = 1
+): void {
   ensureHydrated();
-  const existing = state.find((i) => i.id === product.id);
+  const addQty = clampQty(qty);
+  const existing = state.find((i) => i.slug === item.slug);
   if (existing) {
     setState(
       state.map((i) =>
-        i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
+        i.slug === item.slug
+          ? { ...i, qty: clampQty(i.qty + addQty) }
+          : i
       )
     );
   } else {
-    setState([
-      ...state,
-      {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: 1,
-      },
-    ]);
+    setState([...state, { ...item, qty: addQty }]);
   }
 }
 
-export function removeItem(id: number): void {
+export function removeItem(slug: string): void {
   ensureHydrated();
-  setState(state.filter((i) => i.id !== id));
+  setState(state.filter((i) => i.slug !== slug));
+}
+
+export function setQty(slug: string, qty: number): void {
+  ensureHydrated();
+  const q = Math.floor(qty);
+  if (!Number.isFinite(q) || q <= 0) {
+    setState(state.filter((i) => i.slug !== slug));
+    return;
+  }
+  setState(
+    state.map((i) => (i.slug === slug ? { ...i, qty: clampQty(q) } : i))
+  );
 }
 
 export function getCartItems(): CartItem[] {
   ensureHydrated();
   return state;
+}
+
+export function getCartCount(): number {
+  ensureHydrated();
+  return state.reduce((s, x) => s + x.qty, 0);
 }
 
 export function clearCart(): void {
@@ -103,25 +133,44 @@ export function replaceCart(items: CartItem[]): void {
 
 export function mergeCart(items: CartItem[]): CartItem[] {
   ensureHydrated();
-  const map = new Map<number, CartItem>();
-  for (const item of state) map.set(item.id, { ...item });
+  const map = new Map<string, CartItem>();
+  for (const item of state) map.set(item.slug, { ...item });
   for (const item of items) {
-    const prev = map.get(item.id);
+    const prev = map.get(item.slug);
     if (prev) {
-      map.set(item.id, {
+      map.set(item.slug, {
         ...prev,
-        quantity: prev.quantity + item.quantity,
-        price: item.price,
+        qty: clampQty(prev.qty + item.qty),
         name: item.name,
+        sku: item.sku,
       });
     } else {
-      map.set(item.id, { ...item });
+      map.set(item.slug, { ...item, qty: clampQty(item.qty) });
     }
   }
   const merged = Array.from(map.values());
   setState(merged);
   return merged;
 }
+
+export function cartToMessageBlock(items: CartItem[] = state): string {
+  if (items.length === 0) return "";
+  return items
+    .map((x) => `- ${x.qty} × ${x.name} (cikkszám: ${x.sku})`)
+    .join("\n");
+}
+
+export function useCartStore(): CartItem[] {
+  ensureHydrated();
+  return useSyncExternalStore(subscribe, getSnapshot, () => []);
+}
+
+export function useCartCount(): number {
+  const items = useCartStore();
+  return items.reduce((s, x) => s + x.qty, 0);
+}
+
+const STORAGE_USER_KEY = "rendezvenyarnyekolas-cart-user-id";
 
 export function getCartUserId(): string | null {
   if (typeof window === "undefined") return null;
@@ -132,9 +181,4 @@ export function setCartUserId(userId: string | null): void {
   if (typeof window === "undefined") return;
   if (userId) localStorage.setItem(STORAGE_USER_KEY, userId);
   else localStorage.removeItem(STORAGE_USER_KEY);
-}
-
-export function useCartStore(): CartItem[] {
-  ensureHydrated();
-  return useSyncExternalStore(subscribe, getSnapshot, () => []);
 }

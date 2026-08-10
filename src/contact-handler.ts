@@ -50,15 +50,20 @@ export function processContactPayload(body: unknown): ContactResult {
     return { status: 400, body: { error: "Cart too large" } };
   }
 
+  const type =
+    data.type === "order" || data.type === "quote" ? data.type : "contact";
+
   console.log(
     JSON.stringify({
-      event: "contact_received",
+      event: type === "order" ? "order_received" : "contact_received",
       siteId: "site-4",
+      type,
       cartItemCount: cart.length,
       hasName: true,
       hasEmail: true,
       hasPhone: phone.length > 0,
       hasMessage: message.length > 0,
+      netTotal: typeof data.net_total_huf === "number" ? data.net_total_huf : undefined,
     })
   );
 
