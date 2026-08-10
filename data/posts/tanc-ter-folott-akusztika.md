@@ -5,6 +5,8 @@ date: "2026-03-31"
 author: "Szerkesztőség"
 category: "Hangulat"
 readingTime: 2
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/f802eee0-d76d-4a21-a3e5-37ba39ee7683/rendezvenyarnyekolas-shadow-field.png"
 imageAlt: "Dekor ponyva árnyéka kültéri rendezvénytéren"
 ---

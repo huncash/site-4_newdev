@@ -1,5 +1,6 @@
 "use client";
 
+import { AI_DISCLOSURE_COPY } from "@/config/ai-transparency";
 import type { PostMeta } from "@/lib/blog";
 import { cn } from "@/lib/utils";
 
@@ -50,11 +51,19 @@ export function BlogIndex({
           {posts.map((post) => (
             <li key={post.slug} className="py-8">
               <article>
-                {post.category ? (
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand">
-                    {post.category}
-                  </p>
-                ) : null}
+                <div className="mb-2 flex flex-wrap items-center gap-2">
+                  {post.category ? (
+                    <p className="text-xs font-semibold uppercase tracking-widest text-brand">
+                      {post.category}
+                    </p>
+                  ) : null}
+                  {post.aiDisclosure === "generated" ||
+                  post.aiDisclosure === "modified" ? (
+                    <span className="rounded bg-section-dark px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-section-dark-foreground">
+                      {AI_DISCLOSURE_COPY[post.aiDisclosure].shortLabel}
+                    </span>
+                  ) : null}
+                </div>
 
                 <h2 className="mb-2 text-xl font-bold leading-snug md:text-2xl text-foreground">
                   <a

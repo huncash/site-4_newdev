@@ -5,6 +5,8 @@ date: "2026-03-17"
 author: "Szerkesztőség"
 category: "Világítás"
 readingTime: 2
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/17dab12f-349e-4277-b14e-6c3a180f6c8b/rendezvenyarnyekolas-hero-night.png"
 imageAlt: "Esti UV-fénnyel megvilágított dekorponyva belvárosi utcán"
 ---

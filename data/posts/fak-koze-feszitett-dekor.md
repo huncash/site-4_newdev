@@ -5,6 +5,8 @@ date: "2026-05-12"
 author: "Szerkesztőség"
 category: "Helyszín"
 readingTime: 3
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/9530f2eb-12e4-4b41-a594-0a545cf2a70e/rendezvenyarnyekolas-day-field.png"
 imageAlt: "Nappali kültéri mező fölé feszített dekor ponyva"
 ---

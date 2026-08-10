@@ -5,6 +5,8 @@ date: "2026-04-28"
 author: "Szerkesztőség"
 category: "Szervezés"
 readingTime: 3
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/b5bb4906-6e7d-41fb-8271-b011dc321450/rendezvenyarnyekolas-installation.png"
 imageAlt: "Dekor ponyva telepítés előkészítése a földön"
 ---

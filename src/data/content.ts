@@ -221,6 +221,8 @@ export const CONTENT = {
       { label: "Blog", href: "/blog" },
       { label: "Kapcsolat", href: "/kapcsolat" },
       { label: "ÁSZF", href: "/aszf" },
+      { label: "Adatvédelem", href: "/adatvedelem" },
+      { label: "AI átláthatóság", href: "/ai-atlathatosag" },
     ] satisfies ContentLink[],
   },
 } as const;

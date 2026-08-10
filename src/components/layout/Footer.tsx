@@ -94,7 +94,13 @@ export function Footer({
 
       <div className="border-t border-section-dark-foreground/15">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-xs text-section-dark-foreground/70">
-          <span>© Copyright {foundedYear} – {year} | Minden jog fenntartva.</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>© Copyright {foundedYear} – {year} | Minden jog fenntartva.</span>
+            <span aria-hidden="true">|</span>
+            <a href="/ai-atlathatosag" className="hover:text-brand">
+              AI Act 50. cikk — átláthatóság
+            </a>
+          </div>
           <a href={`mailto:${SITE_CONFIG.publicEmail}`} className="hover:text-brand">
             Kérdése van? Írj nekünk! ({SITE_CONFIG.publicEmail})
           </a>

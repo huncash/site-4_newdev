@@ -5,6 +5,8 @@ date: "2026-06-09"
 author: "Szerkesztőség"
 category: "Üzlet"
 readingTime: 3
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/5c765be6-fb3c-4e6d-823e-0a66ef05c441/rendezvenyarnyekolas-nappali-alulnezet.png"
 imageAlt: "Nappali fényben rendezvény ponyva alulnézetből"
 ---
@@ -115,6 +117,6 @@ hanem a magyar B2B gyakorlat, és a Számlázz.hu-n keresztül átlátható.
 Visszatérő, szerződéses partnernél NET 8 / 15 / 30 fizetési határidőre
 átállunk, a szerződésben rögzített módon.
 
-> A bérlés és az egyedi gyártás nem versenytársak. Egy hosszú távú
-> ügyfélnél jellemzően mindkettőből van — egyedi a fő-vizuál,
-> bérelt a kiegészítő zónák.
+> A bérlés és az egyedi gyártás nem egymás ellenfelei. Hosszú távú
+> ügyfélkapcsolatban gyakran mindkettő megjelenik: az egyedi gyártás
+> a fő vizuált adja, a bérlés pedig a kiegészítő zónákat.

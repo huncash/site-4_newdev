@@ -5,6 +5,8 @@ date: "2026-02-17"
 author: "Szerkesztőség"
 category: "Anyag"
 readingTime: 3
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/5376e3a3-119b-44a4-aac1-7f720413c910/rendezvenyarnyekolas-organic-canopy.png"
 imageAlt: "Organikus mintázatú elasztikus dekor ponyva feszítve"
 ---

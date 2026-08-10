@@ -5,6 +5,8 @@ date: "2026-03-03"
 author: "Szerkesztőség"
 category: "Anyag"
 readingTime: 2
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/399f0418-d038-47a4-98e7-ec39c4c6fea3/rendezvenyarnyekolas-uv-close.png"
 imageAlt: "UV-aktív dekor ponyva közeli mintázata"
 ---

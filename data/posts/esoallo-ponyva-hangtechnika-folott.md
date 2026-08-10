@@ -5,6 +5,8 @@ date: "2026-05-26"
 author: "Szerkesztőség"
 category: "Funkcionális"
 readingTime: 2
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/e9ebc5f8-fab6-4c0d-95c4-a85ac24d32bd/rendezvenyarnyekolas-szabadteri-esti-alulnezet.png"
 imageAlt: "Szabadtéri esti alulnézet dekor ponyvával"
 ---

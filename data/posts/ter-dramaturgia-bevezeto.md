@@ -5,6 +5,8 @@ date: "2026-02-03"
 author: "Szerkesztőség"
 category: "Pozicionálás"
 readingTime: 3
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/5c4fd9ce-322c-4b06-808f-9e8ef6a45269/rendezvenyarnyekolas-kozter-hangulatkep.png"
 imageAlt: "Köztéri rendezvény fölé feszített elasztikus dekor ponyva, hangulatkép"
 ---

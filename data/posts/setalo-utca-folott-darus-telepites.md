@@ -5,6 +5,8 @@ date: "2026-04-14"
 author: "Szerkesztőség"
 category: "Telepítés"
 readingTime: 3
+aiDisclosure: assisted
+editorialReview: true
 image: "/__l5e/assets-v1/10b022c8-0ca5-4622-8a73-d0a287998c11/rendezvenyarnyekolas-setaloutca-daruval.png"
 imageAlt: "Sétálóutca fölé feszített dekorponyva emelőkosárral"
 ---
