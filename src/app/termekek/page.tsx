@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { Catalog } from "@/components/Catalog";
-import { products } from "@/data/catalog";
+import { getPublicProducts } from "@/lib/catalog-public";
 
 export const metadata: Metadata = {
   title:
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function TermekekPage() {
+  const products = getPublicProducts();
   return (
     <Suspense
       fallback={

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState, type FormEvent } from "react";
 
-import { getProduct } from "@/data/catalog";
+import { getPublicProduct } from "@/lib/catalog-public";
 import { clearCart, useCartStore } from "@/lib/cart-store";
 
 const VAT_RATE = 0.27;
@@ -13,7 +13,7 @@ function formatHuf(value: number): string {
 }
 
 function unitNetFor(slug: string): number | null {
-  const product = getProduct(slug);
+  const product = getPublicProduct(slug);
   if (!product || product.offerType === "rental") return null;
   const fp = product.featuredPrice;
   if (!fp) return null;

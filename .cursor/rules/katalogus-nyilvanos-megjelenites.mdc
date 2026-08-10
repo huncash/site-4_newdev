@@ -1,0 +1,22 @@
+---
+description: Katalógus ügyféloldali megjelenítés — márka és forrás
+alwaysApply: true
+---
+
+# Katalógus: nyilvános termékmegjelenítés
+
+Ügyfélnek **soha** ne mutassunk beszerzői / nagyker forrást, és a márkanév ne legyen a terméknév előtagja.
+
+## Kötelező szabályok
+
+1. **Márka a névben tilos:** `EUROLITE` / `Eurolite` / `Omnilux` előtagot a publikus terméknévből el kell távolítani (lista, részletes oldal, meta title, kosár, megrendelés).
+2. **Márka csak a műszaki adatokban:** egyetlen `Márka` sor (pl. `EUROLITE`), a többi spechez képest **ABC sorrendben** (`hu` locale).
+3. **Forrás / beszállító tilos:** `Forrás`, beszerzési kulcsok, Steinigke (és hasonló) előtag a `Cikkszám`-ban — ezek nem jelenhetnek meg az ügyfélnek. Képaláírásban se legyen gyártó/nagyker név.
+4. **Implementáció:** minden storefront olvasás `getPublicProduct` / `getPublicProducts` / `toPublicCatalogProduct` (`src/lib/catalog-public.ts`) keresztül menjen. A nyers `products` / `getProduct` a `catalog.ts`-ben belső/admin adat lehet; új UI ne ezeket tegye ki közvetlenül.
+5. **Új termék / sync:** ha forrásadat bekerül a nyers adatba, a publikus rétegnek továbbra is szűrnie kell — ne bízzunk abban, hogy a nyers JSON „tiszta”.
+
+## Ellenőrzés
+
+- Terméknév: nincs `EUROLITE` / `Omnilux` előtag.
+- Műszaki adatok: van `Márka`, nincs `Forrás`, nincs `Steinigke …` a cikkszámban.
+- Figcaption / alt: nincs gyártó/nagyker megnevezés.

@@ -136,9 +136,11 @@ export function toPublicProduct(
   const normalized = normalizeEuroliteProduct(product as RawProduct);
   const specs = normalized.specs
     ? Object.fromEntries(
-        Object.entries(normalized.specs).filter(
-          ([key]) => !SENSITIVE_SPEC_KEY.test(key)
-        )
+        Object.entries(normalized.specs)
+          .filter(([key]) => !SENSITIVE_SPEC_KEY.test(key))
+          .sort(([a], [b]) =>
+            a.localeCompare(b, "hu", { sensitivity: "base" })
+          )
       )
     : undefined;
 

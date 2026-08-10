@@ -1227,6 +1227,7 @@ export function getCategory(slug: string): Category | undefined {
   return categories.find((c) => c.slug === slug);
 }
 
+/** Raw lookup. For customer UI use `getPublicProduct` from `@/lib/catalog-public`. */
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }

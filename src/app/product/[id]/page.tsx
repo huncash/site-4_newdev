@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { getProduct } from "@/data/catalog";
+import { getPublicProduct } from "@/lib/catalog-public";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -9,7 +9,7 @@ interface Props {
 /** Legacy `/product/[id]` → `/termekek/[slug]`. */
 export default async function LegacyProductPage({ params }: Props) {
   const { id } = await params;
-  const bySlug = getProduct(id);
+  const bySlug = getPublicProduct(id);
   if (bySlug) {
     redirect(`/termekek/${bySlug.slug}`);
   }

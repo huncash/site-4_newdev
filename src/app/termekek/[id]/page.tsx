@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ProductDetail } from "@/components/ProductDetail";
-import { getCategory, getProduct, products } from "@/data/catalog";
+import { getCategory, products } from "@/data/catalog";
+import { getPublicProduct } from "@/lib/catalog-public";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -14,7 +15,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = getPublicProduct(id);
   if (!product) return {};
   const category = getCategory(product.categorySlug);
   return {
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = getPublicProduct(id);
 
   if (!product) {
     notFound();

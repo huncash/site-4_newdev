@@ -9,6 +9,7 @@ import {
   type Product,
 } from "@/data/catalog";
 import { addItem, useCartStore } from "@/lib/cart-store";
+import { publicSpecEntries } from "@/lib/catalog-public";
 import {
   getLightingRecommendation,
   tarpFitLabel,
@@ -154,9 +155,8 @@ export function ProductDetail({ product }: { product: Product }) {
             </div>
           )}
           <figcaption className="mt-2 text-[11px] italic leading-snug text-muted-foreground">
-            A termékképek kizárólag illusztrációk — a gyártó (Steinigke / EUROLITE)
-            katalógusából átvéve. A tényleges méret, minta és kivitel az
-            adatlap és az ajánlat szerint értendő.
+            A termékképek kizárólag illusztrációk. A tényleges méret, minta és
+            kivitel az adatlap és az ajánlat szerint értendő.
           </figcaption>
         </figure>
 
@@ -203,13 +203,13 @@ export function ProductDetail({ product }: { product: Product }) {
         <div>
           <h2 className="text-lg font-semibold tracking-tight">Műszaki adatok</h2>
           <dl className="mt-4 border-t border-border">
-            {Object.entries(product.specs).map(([k, v]) => (
+            {publicSpecEntries(product.specs).map(([k, v]) => (
               <div
                 key={k}
                 className="grid grid-cols-[180px_1fr] gap-4 border-b border-border py-3 text-sm"
               >
                 <dt className="text-muted-foreground">{k}</dt>
-                <dd className="text-foreground">{String(v)}</dd>
+                <dd className="text-foreground">{v}</dd>
               </div>
             ))}
           </dl>

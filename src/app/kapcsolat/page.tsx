@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState, type FormEvent } from "react";
 
-import { getProduct } from "@/data/catalog";
+import { getPublicProduct } from "@/lib/catalog-public";
 import {
   cartToMessageBlock,
   clearCart,
@@ -18,7 +18,7 @@ const inputCls =
 function ContactForm() {
   const searchParams = useSearchParams();
   const termekSlug = searchParams.get("termek") ?? "";
-  const product = termekSlug ? getProduct(termekSlug) : undefined;
+  const product = termekSlug ? getPublicProduct(termekSlug) : undefined;
   const cart = useCartStore();
   const cartBlock = useMemo(() => cartToMessageBlock(cart), [cart]);
 
