@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3003",
     "build": "next build",
-    "start": "next start --port 3003",
+    "start": "next start --port 3004",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "deploy": "git add . && git commit -m \"Auto deploy\" && git push origin main && ssh vmvrgohu@195.228.152.141 \"cd /var/www/site-4 && git remote set-url origin https://github.com/huncash/site-4_newdev.git && git fetch origin && git reset --hard origin/main && npm install && rm -rf .next && npm run build && pm2 restart site-4\""
   },
